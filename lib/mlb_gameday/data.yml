@@ -1,0 +1,330 @@
+---
+:AL: &al !ruby/object:MLBGameday::League
+  name: American
+  divisions:
+    :East: &aleast !ruby/object:MLBGameday::Division
+      name: East
+      teams:
+        :BAL: !ruby/object:MLBGameday::Team
+          name: Orioles
+          city: Baltimore
+          league: *al
+          division: *aleast
+          names:
+          - orioles
+          - oriole
+          - baltimore
+        :BOS: !ruby/object:MLBGameday::Team
+          name: Red Sox
+          city: Boston
+          league: *al
+          division: *aleast
+          names:
+          - red sox
+          - redsox
+          - boston
+          - bosox
+        :NYY: !ruby/object:MLBGameday::Team
+          name: Yankees
+          city: New York
+          league: *al
+          division: *aleast
+          names:
+          - yankees
+          - yankee
+          - new york yankees
+          - new york yankee
+        :TB: !ruby/object:MLBGameday::Team
+          name: Rays
+          city: Tampa Bay
+          league: *al
+          division: *aleast
+          names:
+          - rays
+          - ray
+          - devil rays
+          - devil ray
+          - tampa
+          - tampa bay
+        :TOR: !ruby/object:MLBGameday::Team
+          name: Blue Jays
+          city: Toronto
+          league: *al
+          division: *aleast
+          names:
+          - blue jays
+          - blue jay
+          - bluejays
+          - bluejay
+          - jays
+          - jay
+          - toronto
+    :Central: &alcentral !ruby/object:MLBGameday::Division
+      name: Central
+      teams:
+        :CLE: !ruby/object:MLBGameday::Team
+          name: Indians
+          city: Cleveland
+          league: *al
+          division: *alcentral
+          names:
+          - indians
+          - indian
+          - cleveland
+        :CWS: !ruby/object:MLBGameday::Team
+          name: White Sox
+          city: Chicago
+          league: *al
+          division: *alcentral
+          names:
+          - white sox
+          - chicago white sox
+        :DET: !ruby/object:MLBGameday::Team
+          name: Tigers
+          city: Detroit
+          league: *al
+          division: *alcentral
+          names:
+          - tigers
+          - tiger
+          - detroit
+        :KC: !ruby/object:MLBGameday::Team
+          name: Royals
+          city: Kansas City
+          league: *al
+          division: *alcentral
+          names:
+          - royals
+          - royal
+          - kansas city
+          - kansas
+        :MIN: !ruby/object:MLBGameday::Team
+          name: Twins
+          city: Minnesota
+          league: *al
+          division: *alcentral
+          names:
+          - twins
+          - twin
+          - minnesota
+    :West: &alwest !ruby/object:MLBGameday::Division
+      name: West
+      teams:
+        :ANA: !ruby/object:MLBGameday::Team
+          name: Angels
+          city: Anaheim
+          league: *al
+          division: *alwest
+          names:
+          - angels
+          - angel
+          - anaheim
+          - ana
+          - los angeles angel
+          - los angeles angels
+          - la angels
+          - la angel
+          - laaa
+          - los angeles angels of anaheim
+        :HOU: !ruby/object:MLBGameday::Team
+          name: Astros
+          city: Houston
+          league: *al
+          division: *alwest
+          names:
+          - astros
+          - astro
+          - houston
+        :OAK: !ruby/object:MLBGameday::Team
+          name: Athletics
+          city: Oakland
+          league: *al
+          division: *alwest
+          names:
+          - athletics
+          - athletic
+          - as
+          - oakland
+        :SEA: !ruby/object:MLBGameday::Team
+          name: Mariners
+          city: Seattle
+          league: *al
+          division: *alwest
+          names:
+          - mariners
+          - mariner
+          - seattle
+        :TEX: !ruby/object:MLBGameday::Team
+          name: Rangers
+          city: Texas
+          league: *al
+          division: *alwest
+          names:
+          - rangers
+          - ranger
+          - texas
+:NL: &nl !ruby/object:MLBGameday::League
+  name: National
+  divisions:
+    :East: &nleast !ruby/object:MLBGameday::Division
+      name: East
+      teams:
+        :ATL: !ruby/object:MLBGameday::Team
+          name: Braves
+          city: Atlanta
+          league: *nl
+          division: *nleast
+          names:
+          - braves
+          - brave
+          - atlanta
+        :MIA: !ruby/object:MLBGameday::Team
+          name: Marlins
+          city: Miami
+          league: *nl
+          division: *nleast
+          names:
+          - marlins
+          - marlin
+          - miami
+          - florida
+        :NYM: !ruby/object:MLBGameday::Team
+          name: Mets
+          city: New York
+          league: *nl
+          division: *nleast
+          names:
+          - mets
+          - met
+          - new york mets
+          - new york met
+        :PHI: !ruby/object:MLBGameday::Team
+          name: Phillies
+          city: Philadelphia
+          league: *nl
+          division: *nleast
+          names:
+          - phillies
+          - phillie
+          - philly
+          - philadelphia
+        :WSH: !ruby/object:MLBGameday::Team
+          name: Nationals
+          city: Washington
+          league: *nl
+          division: *nleast
+          names:
+          - nationals
+          - natinals
+          - national
+          - washington
+    :Central: &nlcentral !ruby/object:MLBGameday::Division
+      name: Central
+      teams:
+        :CHC: !ruby/object:MLBGameday::Team
+          name: Cubs
+          city: Chicago
+          league: *nl
+          division: *nlcentral
+          names:
+          - cubs
+          - cub
+          - chicago cubs
+          - chicago cub
+        :CIN: !ruby/object:MLBGameday::Team
+          name: Reds
+          city: Cincinnati
+          league: *nl
+          division: *nlcentral
+          names:
+          - reds
+          - red
+          - cincinnati
+        :MIL: !ruby/object:MLBGameday::Team
+          name: Brewers
+          city: Milwaukee
+          league: *nl
+          division: *nlcentral
+          names:
+          - brewers
+          - brewer
+          - milwaukee
+        :PIT: !ruby/object:MLBGameday::Team
+          name: Pirates
+          city: Pittsburgh
+          league: *nl
+          division: *nlcentral
+          names:
+          - pirates
+          - pirate
+          - buccos
+          - bucco
+          - pittsburgh
+        :STL: !ruby/object:MLBGameday::Team
+          name: Cardinals
+          city: St. Louis
+          league: *nl
+          division: *nlcentral
+          names:
+          - cardinals
+          - cardinal
+          - st louis
+          - st. louis
+    :West: &nlwest !ruby/object:MLBGameday::Division
+      name: West
+      teams:
+        :ARI: !ruby/object:MLBGameday::Team
+          name: Diamondbacks
+          city: Arizona
+          league: *nl
+          division: *nlwest
+          names:
+          - diamondbacks
+          - diamondback
+          - dbacks
+          - dback
+          - arizona
+          - az
+        :COL: !ruby/object:MLBGameday::Team
+          name: Rockies
+          city: Colorado
+          league: *nl
+          division: *nlwest
+          names:
+          - rockies
+          - rockie
+          - colorado
+        :LAD: !ruby/object:MLBGameday::Team
+          name: Dodgers
+          city: Los Angeles
+          league: *nl
+          division: *nlwest
+          names:
+          - dodgers
+          - dodger
+          - los angeles
+          - la
+          - los angeles dodgers
+          - los angeles dodger
+          - la dodger
+          - la dodgers
+        :SD: !ruby/object:MLBGameday::Team
+          name: Padres
+          city: San Diego
+          league: *nl
+          division: *nlwest
+          names:
+          - padres
+          - padre
+          - san diego
+        :SF: !ruby/object:MLBGameday::Team
+          name: Giants
+          city: San Francisco
+          league: *nl
+          division: *nlwest
+          names:
+          - giants
+          - giant
+          - san fran
+          - san francisco
+          - gigantes
