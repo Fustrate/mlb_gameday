@@ -13,7 +13,8 @@ module MLBGameday
 
 	class API
 		def initialize
-			@leagues = YAML.load(File.open(File.expand_path('/mlb_gameday/data.yml')))
+			# File File File File File File File File File File File File File File File
+			@leagues = YAML.load File.open(File.join(File.dirname(File.expand_path(__FILE__)), '../resources/data.yml'))
 		end
 
 		def leagues
