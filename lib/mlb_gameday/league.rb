@@ -5,6 +5,10 @@ module MLBGameday
 			@divisions = divisions
 		end
 
+		def name
+			@name
+		end
+
 		def divisions
 			@divisions
 		end

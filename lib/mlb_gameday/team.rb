@@ -1,11 +1,17 @@
 module MLBGameday
 	class Team
-		def initialize(data)
-			@name = data[:name]
-			@city = data[:city]
-			@league = data[:league]
-			@division = data[:division]
-			@names = data[:names]
+		def initialize(opts = {})
+			@name     = opts[:name]
+			@city     = opts[:city]
+			@league   = opts[:league]
+			@division = opts[:division]
+			@names    = opts[:names]
+			@code     = opts[:code]
+		end
+
+		# So we don't get huge printouts
+		def inspect
+			%Q{#<MLBGameday::Team @name="#{@name}">}
 		end
 
 		def name
@@ -26,6 +32,10 @@ module MLBGameday
 
 		def names
 			@names
+		end
+
+		def code
+			@code
 		end
 	end
 end

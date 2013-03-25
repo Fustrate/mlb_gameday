@@ -10,7 +10,9 @@
           city: Baltimore
           league: *al
           division: *aleast
+          code: BAL
           names:
+          - bal
           - orioles
           - oriole
           - baltimore
@@ -19,7 +21,9 @@
           city: Boston
           league: *al
           division: *aleast
+          code: BOS
           names:
+          - bos
           - red sox
           - redsox
           - boston
@@ -29,7 +33,9 @@
           city: New York
           league: *al
           division: *aleast
+          code: NYY
           names:
+          - nyy
           - yankees
           - yankee
           - new york yankees
@@ -39,7 +45,9 @@
           city: Tampa Bay
           league: *al
           division: *aleast
+          code: TB
           names:
+          - tb
           - rays
           - ray
           - devil rays
@@ -51,7 +59,9 @@
           city: Toronto
           league: *al
           division: *aleast
+          code: TOR
           names:
+          - tor
           - blue jays
           - blue jay
           - bluejays
@@ -67,7 +77,9 @@
           city: Cleveland
           league: *al
           division: *alcentral
+          code: CLE
           names:
+          - cle
           - indians
           - indian
           - cleveland
@@ -76,7 +88,9 @@
           city: Chicago
           league: *al
           division: *alcentral
+          code: CWS
           names:
+          - cws
           - white sox
           - chicago white sox
         :DET: !ruby/object:MLBGameday::Team
@@ -84,7 +98,9 @@
           city: Detroit
           league: *al
           division: *alcentral
+          code: DET
           names:
+          - det
           - tigers
           - tiger
           - detroit
@@ -93,7 +109,9 @@
           city: Kansas City
           league: *al
           division: *alcentral
+          code: KC
           names:
+          - kc
           - royals
           - royal
           - kansas city
@@ -103,7 +121,9 @@
           city: Minnesota
           league: *al
           division: *alcentral
+          code: MIN
           names:
+          - min
           - twins
           - twin
           - minnesota
@@ -115,7 +135,9 @@
           city: Anaheim
           league: *al
           division: *alwest
+          code: ANA
           names:
+          - ana
           - angels
           - angel
           - anaheim
@@ -131,7 +153,9 @@
           city: Houston
           league: *al
           division: *alwest
+          code: HOU
           names:
+          - hou
           - astros
           - astro
           - houston
@@ -140,7 +164,9 @@
           city: Oakland
           league: *al
           division: *alwest
+          code: OAK
           names:
+          - oak
           - athletics
           - athletic
           - as
@@ -150,7 +176,9 @@
           city: Seattle
           league: *al
           division: *alwest
+          code: SEA
           names:
+          - sea
           - mariners
           - mariner
           - seattle
@@ -159,7 +187,9 @@
           city: Texas
           league: *al
           division: *alwest
+          code: TEX
           names:
+          - tex
           - rangers
           - ranger
           - texas
@@ -174,7 +204,9 @@
           city: Atlanta
           league: *nl
           division: *nleast
+          code: ATL
           names:
+          - atl
           - braves
           - brave
           - atlanta
@@ -183,7 +215,9 @@
           city: Miami
           league: *nl
           division: *nleast
+          code: MIA
           names:
+          - mia
           - marlins
           - marlin
           - miami
@@ -193,7 +227,9 @@
           city: New York
           league: *nl
           division: *nleast
+          code: NYM
           names:
+          - nym
           - mets
           - met
           - new york mets
@@ -203,7 +239,9 @@
           city: Philadelphia
           league: *nl
           division: *nleast
+          code: PHI
           names:
+          - phi
           - phillies
           - phillie
           - philly
@@ -213,7 +251,9 @@
           city: Washington
           league: *nl
           division: *nleast
+          code: WSH
           names:
+          - wsh
           - nationals
           - natinals
           - national
@@ -226,7 +266,9 @@
           city: Chicago
           league: *nl
           division: *nlcentral
+          code: CHC
           names:
+          - chc
           - cubs
           - cub
           - chicago cubs
@@ -236,7 +278,9 @@
           city: Cincinnati
           league: *nl
           division: *nlcentral
+          code: CIN
           names:
+          - cin
           - reds
           - red
           - cincinnati
@@ -245,7 +289,9 @@
           city: Milwaukee
           league: *nl
           division: *nlcentral
+          code: MIL
           names:
+          - mil
           - brewers
           - brewer
           - milwaukee
@@ -254,7 +300,9 @@
           city: Pittsburgh
           league: *nl
           division: *nlcentral
+          code: PIT
           names:
+          - pit
           - pirates
           - pirate
           - buccos
@@ -265,7 +313,9 @@
           city: St. Louis
           league: *nl
           division: *nlcentral
+          code: STL
           names:
+          - stl
           - cardinals
           - cardinal
           - st louis
@@ -278,7 +328,9 @@
           city: Arizona
           league: *nl
           division: *nlwest
+          code: ARI
           names:
+          - ari
           - diamondbacks
           - diamondback
           - dbacks
@@ -290,7 +342,9 @@
           city: Colorado
           league: *nl
           division: *nlwest
+          code: COL
           names:
+          - col
           - rockies
           - rockie
           - colorado
@@ -299,7 +353,9 @@
           city: Los Angeles
           league: *nl
           division: *nlwest
+          code: LAD
           names:
+          - lad
           - dodgers
           - dodger
           - los angeles
@@ -313,7 +369,9 @@
           city: San Diego
           league: *nl
           division: *nlwest
+          code: SD
           names:
+          - sd
           - padres
           - padre
           - san diego
@@ -322,7 +380,9 @@
           city: San Francisco
           league: *nl
           division: *nlwest
+          code: SF
           names:
+          - sf
           - giants
           - giant
           - san fran
