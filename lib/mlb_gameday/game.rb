@@ -30,7 +30,7 @@ module MLBGameday
 			"#{ xpath("//game/@home_time") } #{ xpath("//game/@home_time_zone") }"
 		end
 
-		# Preview, In Progress, Final
+		# Preview, Pre-Game, In Progress, Final
 		def status
 			@status ||= @data.xpath("//game/@status").first.value
 		end
