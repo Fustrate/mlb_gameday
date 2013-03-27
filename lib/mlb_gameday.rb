@@ -2,10 +2,8 @@ require 'httparty'
 require 'nokogiri'
 require 'open-uri'
 require 'yaml'
-require 'net/http'
-require 'uri'
 
-%w{version league division team game player}.each do |file|
+%w{version league division team game player pitcher batter}.each do |file|
 	require "mlb_gameday/#{file}"
 end
 
