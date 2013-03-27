@@ -21,15 +21,13 @@ module MLBGameday
 		end
 
 		def venue
-			@data.xpath("//game/@venue").first.value
+			xpath("//game/@venue")
 		end
 
 		def start_time(team = nil)
-			team = @home if team.nil?
+			return "#{ xpath("//game/@away_time") } #{ xpath("//game/@away_time_zone") }" if team == @away
 
-			return "#{ @data.xpath("//game/@away_time").first.value } #{ @data.xpath("//game/@away_time_zone").first.value }" if team == @away
-
-			"#{ @data.xpath("//game/@home_time").first.value } #{ @data.xpath("//game/@home_time_zone").first.value }"
+			"#{ xpath("//game/@home_time") } #{ xpath("//game/@home_time_zone") }"
 		end
 
 		# Preview, In Progress, Final
@@ -46,6 +44,7 @@ module MLBGameday
 			first, second, third = [nil, nil, nil]
 
 			[first, second, third]
+		end
 
 		def over?
 			status == "Final"
