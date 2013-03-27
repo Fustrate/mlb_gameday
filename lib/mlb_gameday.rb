@@ -91,15 +91,19 @@ module MLBGameday
 		end
 
 		def fetch_pitcher_xml(id, year: nil)
-			year = Date.today.year if year.nil?
+			begin
+				year = Date.today.year if year.nil?
 
-			# We only really want one piece of data from this file...
-			year_data = Nokogiri::XML(open(API_URL + "/year_#{ year }/pitchers/#{ id }.xml"))
+				# We only really want one piece of data from this file...
+				year_data = Nokogiri::XML(open(API_URL + "/year_#{ year }/pitchers/#{ id }.xml"))
 
-			game = year_data.xpath("//pitching/@game_id").first.value
-			year, month, day, _ = game.split("/")
+				game = year_data.xpath("//pitching/@game_id").first.value
+				year, month, day, _ = game.split("/")
 
-			Nokogiri::XML(open(MLBGameday::API_URL + "year_#{ year }/month_#{ month }/day_#{ day }/gid_#{ game.gsub(/[^a-z0-9]/, "_") }/pitchers/#{ id }.xml"))
+				Nokogiri::XML(open(MLBGameday::API_URL + "year_#{ year }/month_#{ month }/day_#{ day }/gid_#{ game.gsub(/[^a-z0-9]/, "_") }/pitchers/#{ id }.xml"))
+			rescue OpenURI::HTTPError => error
+				raise "Pitcher not found: #{ error.inspect }"
+			end
 		end
 	end
 end
