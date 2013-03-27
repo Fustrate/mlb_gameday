@@ -94,6 +94,8 @@ module MLBGameday
 		end
 
 		def score
+			return [0, 0] if !game.in_progress? && !game.over?
+
 			[xpath("//game/@home_team_runs").to_i, xpath("//game/@away_team_runs").to_i]
 		end
 
