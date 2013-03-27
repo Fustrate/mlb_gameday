@@ -4,5 +4,11 @@ module MLBGameday
 			@api = api
 			@data = data
 		end
+
+		protected
+
+		def xpath(path)
+			@data.xpath(path).first.value
+		end
 	end
 end

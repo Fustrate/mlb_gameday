@@ -1,39 +1,39 @@
 module MLBGameday
 	class Pitcher < Player
 		def name
-			@data.xpath("//Player//@first_name").first.value + " " + @data.xpath("//Player//@last_name").first.value
+			xpath("//Player//@first_name") + " " + xpath("//Player//@last_name")
 		end
 
 		def era
-			@data.xpath("//pitching/season/@era").first.value
+			xpath("//Player/season/@era")
 		end
 
 		def wins
-			@data.xpath("//pitching/season/@w").first.value
+			xpath("//Player/season/@w")
 		end
 
 		def losses
-			@data.xpath("//pitching/season/@l").first.value
+			xpath("//Player/season/@l")
 		end
 
 		def innings
-			@data.xpath("//pitching/season/@ip").first.value
+			xpath("//Player/season/@ip")
 		end
 
 		def saves
-			@data.xpath("//pitching/season/@sv").first.value
+			xpath("//Player/season/@sv")
 		end
 
 		def whip
-			@data.xpath("//pitching/season/@whip").first.value
+			xpath("//Player/season/@whip")
 		end
 
 		def strikeouts
-			@data.xpath("//pitching/season/@so").first.value
+			xpath("//Player/season/@so")
 		end
 
 		def walks
-			@data.xpath("//pitching/season/@bb").first.value
+			xpath("//Player/season/@bb")
 		end
 
 		# Returns a Nokogiri::XML object
