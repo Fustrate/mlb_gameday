@@ -57,7 +57,9 @@ module MLBGameday
 		def batter(id)
 			return nil if id.empty?
 
-			MLBGameday::Batter.new(self, fetch_batter_xml(id))
+			xml = fetch_batter_xml(id)
+
+			MLBGameday::Batter.new(self, fetch_batter_xml(id)) if !xml.nil?
 		end
 
 		def find_games(team: nil, date: nil)
@@ -100,9 +102,9 @@ module MLBGameday
 				game = year_data.xpath("//pitching/@game_id").first.value
 				year, month, day, _ = game.split("/")
 
-				Nokogiri::XML(open(MLBGameday::API_URL + "year_#{ year }/month_#{ month }/day_#{ day }/gid_#{ game.gsub(/[^a-z0-9]/, "_") }/pitchers/#{ id }.xml"))
-			rescue OpenURI::HTTPError => error
-				raise "Pitcher not found: #{ error.inspect }"
+				Nokogiri::XML(open(MLBGameday::API_URL + "/year_#{ year }/month_#{ month }/day_#{ day }/gid_#{ game.gsub(/[^a-z0-9]/, "_") }/pitchers/#{ id }.xml"))
+			rescue OpenURI::HTTPError
+				return nil
 			end
 		end
 	end
