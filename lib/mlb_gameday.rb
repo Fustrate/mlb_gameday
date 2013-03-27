@@ -2,6 +2,8 @@ require 'httparty'
 require 'nokogiri'
 require 'open-uri'
 require 'yaml'
+require 'net/http'
+require 'uri'
 
 %w{version league division team game player}.each do |file|
 	require "mlb_gameday/#{file}"
@@ -49,7 +51,15 @@ module MLBGameday
 		end
 
 		def pitcher(id)
+			return nil if id.blank?
+
 			MLBGameday::Pitcher.new(self, fetch_pitcher_xml(id))
+		end
+
+		def batter(id)
+			return nil if id.blank?
+
+			MLBGameday::Batter.new(self, fetch_batter_xml(id))
 		end
 
 		def find_games(team: nil, date: nil)

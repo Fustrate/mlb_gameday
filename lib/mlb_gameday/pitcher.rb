@@ -1,10 +1,5 @@
 module MLBGameday
-	class Pitcher
-		def initialize(api, data)
-			@api = api
-			@data = data
-		end
-
+	class Pitcher < Player
 		def name
 			@data.xpath("//Player//@first_name").first.value + " " + @data.xpath("//Player//@last_name").first.value
 		end
