@@ -1,54 +1,49 @@
 module MLBGameday
 	class Pitcher
-		def initialize(api, data, game_data = nil)
+		def initialize(api, data)
 			@api = api
 			@data = data
-			@game_data = game_data
 		end
 
 		def name
-			game_data
+			@data.xpath("//Player//@first_name").first.value + " " + @data.xpath("//Player//@last_name").first.value
+		end
 
 		def era
-			@data.xpath("//pitching/@era").first.value
+			@data.xpath("//pitching/season/@era").first.value
 		end
 
 		def wins
-			@data.xpath("//pitching/@w").first.value
+			@data.xpath("//pitching/season/@w").first.value
 		end
 
 		def losses
-			@data.xpath("//pitching/@l").first.value
+			@data.xpath("//pitching/season/@l").first.value
 		end
 
 		def innings
-			@data.xpath("//pitching/@s_ip").first.value
+			@data.xpath("//pitching/season/@ip").first.value
 		end
 
 		def saves
-			@data.xpath("//pitching/@sv").first.value
+			@data.xpath("//pitching/season/@sv").first.value
 		end
 
 		def whip
-			@data.xpath("//pitching/@whip").first.value
+			@data.xpath("//pitching/season/@whip").first.value
 		end
 
 		def strikeouts
-			@data.xpath("//pitching/@k").first.value
+			@data.xpath("//pitching/season/@so").first.value
 		end
 
 		def walks
-			@data.xpath("//pitching/@bb").first.value
+			@data.xpath("//pitching/season/@bb").first.value
 		end
 
-		private
-
-		def game_data
-			return @game_data if !@game_data.nil?
-
-			game = @data.xpath("//pitching/@game_id").first.value
-			year, month, day, _ = game.split("/")
-
-			@game_data = Nokogiri::XML(open(MLBGameday::API_URL + "year_#{ year }/month_#{ month }/day_#{ day }/gid_#{ game.gsub(/[^a-z0-9]/, "_") }/linescore.xml"))
+		# Returns a Nokogiri::XML object
+		def data
+			@data
+		end
 	end
 end
