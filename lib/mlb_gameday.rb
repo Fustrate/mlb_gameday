@@ -51,13 +51,13 @@ module MLBGameday
 		end
 
 		def pitcher(id)
-			return nil if id.blank?
+			return nil if id.empty?
 
 			MLBGameday::Pitcher.new(self, fetch_pitcher_xml(id))
 		end
 
 		def batter(id)
-			return nil if id.blank?
+			return nil if id.empty?
 
 			MLBGameday::Batter.new(self, fetch_batter_xml(id))
 		end
