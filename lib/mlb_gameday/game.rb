@@ -99,48 +99,59 @@ module MLBGameday
 			[xpath("//game/@home_team_runs"), xpath("//game/@away_team_runs")].map(&:to_i)
 		end
 
-		def pitcher(team)
-			if status == "In Progress"
+		def home_pitcher
+			case status
+			when "In Progress"
 				# The xpath changes based on which half of the inning it is
 				if xpath("//game/@top_inning") == "Y"
-					if team == :away || team == @away
-						current_pitcher
-					else
-						opposing_pitcher
-					end
+					opposing_pitcher
 				else
-					if team == :away || team == @away
-						opposing_pitcher
-					else
-						current_pitcher
-					end
+					current_pitcher
 				end
-			elsif status == "Preview"
-				if team == :away || team == @away
-					@api.pitcher xpath("//game/away_probable_pitcher/@id")
-				else
-					@api.pitcher xpath("//game/home_probable_pitcher/@id")
-				end
-			elsif status == "Final"
+			when "Preview", "Warmup", "Pre-Game"
+				@api.pitcher xpath("//game/home_probable_pitcher/@id")
+			when "Final"
 				home, away = score
 
 				if home > away
-					if team == :away || team == @away
-						losing_pitcher
-					else
-						winning_pitcher
-					end
+					winning_pitcher
 				elsif away > home
-					if team == :away || team == @away
-						winning_pitcher
-					else
-						losing_pitcher
-					end
+					losing_pitcher
 				else
 					# Spring training games can end in ties, in which case there's really no pitching data
 					# See: http://gd2.mlb.com/components/game/mlb/year_2013/month_03/day_07/gid_2013_03_07_texmlb_lanmlb_1/linescore.xml
+					# This should really give a null object pitcher back
 					nil
 				end
+			else
+			end
+		end
+
+		def away_pitcher
+			case status
+			when "In Progress"
+				# The xpath changes based on which half of the inning it is
+				if xpath("//game/@top_inning") == "Y"
+					current_pitcher
+				else
+					opposing_pitcher
+				end
+			when "Preview", "Warmup", "Pre-Game"
+				@api.pitcher xpath("//game/away_probable_pitcher/@id")
+			when "Final"
+				home, away = score
+
+				if home > away
+					losing_pitcher
+				elsif away > home
+					winning_pitcher
+				else
+					# Spring training games can end in ties, in which case there's really no pitching data
+					# See: http://gd2.mlb.com/components/game/mlb/year_2013/month_03/day_07/gid_2013_03_07_texmlb_lanmlb_1/linescore.xml
+					# This should really give a null object pitcher back
+					nil
+				end
+			else
 			end
 		end
 
