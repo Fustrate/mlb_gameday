@@ -45,4 +45,10 @@ describe "The basic MLB Gameday API object" do
 
 		expect(games.count).to eq(1)
 	end
+
+	it "should find a game by gid" do
+		game = @api.game("2013_04_01_sfnmlb_lanmlb_1")
+
+		expect(game.home_team.name).to eq("Dodgers")
+	end
 end

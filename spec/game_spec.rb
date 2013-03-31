@@ -8,9 +8,7 @@ describe "An MLB Gameday Game object" do
 
 		@dodgers = @api.team("Dodgers")
 		@giants = @api.team("Giants")
-	end
 
-	before :each do
 		@games = @api.find_games(team: @dodgers, date: Date.parse("2013-04-01"))
 	end
 
@@ -40,5 +38,8 @@ describe "An MLB Gameday Game object" do
 	end
 
 	it "should have Clayton Kershaw starting" do
+		game = @games[0]
+
+		expect(game.home_pitcher.name).to eq("Clayton Kershaw")
 	end
 end
