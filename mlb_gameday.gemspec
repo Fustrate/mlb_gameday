@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = MLBGameday::VERSION
   spec.authors       = ["Steven Hoffman"]
   spec.email         = ["git@fustrate.com"]
-  spec.description   = %q{MLB Gameday gem}
+  spec.description   = %q{Access data about games and players from the official MLB Gameday API}
   spec.summary       = %q{Fetches gameday data from the MLB Gameday API}
   spec.homepage      = "http://github.com/fustrate/mlb_gameday"
   spec.license       = "MIT"
