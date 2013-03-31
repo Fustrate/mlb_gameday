@@ -57,9 +57,13 @@ module MLBGameday
 		def batter(id)
 			return nil if id.empty?
 
-			xml = fetch_batter_xml(id)
+			MLBGameday::Batter.new(self, fetch_batter_xml(id))
+		end
 
-			MLBGameday::Batter.new(self, fetch_batter_xml(id)) if !xml.nil?
+		def game(gid)
+			date = /\A(\d+)_(\d+)_(\d+)_/.match(gid)
+
+			MLBGameday::Game.new(self, fetch_gameday_xml(DateTime.new(date[1].to_i, date[2].to_i, date[3].to_i), gid))
 		end
 
 		def find_games(team: nil, date: nil)
@@ -92,20 +96,28 @@ module MLBGameday
 			Nokogiri::XML(open(API_URL + date.strftime("/year_%Y/month_%m/day_%d/gid_#{ gameday_link }/linescore.xml")))
 		end
 
+		def fetch_batter_xml(id, year: nil)
+			year = Date.today.year if year.nil?
+
+			# We only really want one piece of data from this file...
+			year_data = Nokogiri::XML(open(API_URL + "/year_#{ year }/batters/#{ id }.xml"))
+
+			game = year_data.xpath("//pitching/@game_id").first.value
+			year, month, day, _ = game.split("/")
+
+			Nokogiri::XML(open(MLBGameday::API_URL + "/year_#{ year }/month_#{ month }/day_#{ day }/gid_#{ game.gsub(/[^a-z0-9]/, "_") }/batters/#{ id }.xml"))
+		end
+
 		def fetch_pitcher_xml(id, year: nil)
-			begin
-				year = Date.today.year if year.nil?
+			year = Date.today.year if year.nil?
 
-				# We only really want one piece of data from this file...
-				year_data = Nokogiri::XML(open(API_URL + "/year_#{ year }/pitchers/#{ id }.xml"))
+			# We only really want one piece of data from this file...
+			year_data = Nokogiri::XML(open(API_URL + "/year_#{ year }/pitchers/#{ id }.xml"))
 
-				game = year_data.xpath("//pitching/@game_id").first.value
-				year, month, day, _ = game.split("/")
+			game = year_data.xpath("//pitching/@game_id").first.value
+			year, month, day, _ = game.split("/")
 
-				Nokogiri::XML(open(MLBGameday::API_URL + "/year_#{ year }/month_#{ month }/day_#{ day }/gid_#{ game.gsub(/[^a-z0-9]/, "_") }/pitchers/#{ id }.xml"))
-			rescue OpenURI::HTTPError
-				return nil
-			end
+			Nokogiri::XML(open(MLBGameday::API_URL + "/year_#{ year }/month_#{ month }/day_#{ day }/gid_#{ game.gsub(/[^a-z0-9]/, "_") }/pitchers/#{ id }.xml"))
 		end
 	end
 end
