@@ -1,11 +1,12 @@
 module MLBGameday
 	class Game
-		def initialize(api, data)
+		def initialize(api, linescore: nil, gamecenter: nil)
 			@api = api
-			@data = data
+			@linescore = linescore
+			@gamecenter = gamecenter
 
-			@home = @api.team(@data.xpath("//game/@home_name_abbrev").first.value)
-			@away = @api.team(@data.xpath("//game/@away_name_abbrev").first.value)
+			@home = @api.team(@linescore.xpath("//game/@home_name_abbrev").first.value)
+			@away = @api.team(@linescore.xpath("//game/@away_name_abbrev").first.value)
 		end
 
 		def teams
@@ -21,23 +22,23 @@ module MLBGameday
 		end
 
 		def venue
-			xpath("//game/@venue")
+			@linescore.xpath("//game/@venue").first.value
 		end
 
 		def start_time(team = nil)
-			return "#{ xpath("//game/@away_time") } #{ xpath("//game/@away_time_zone") }" if team == @away
+			return "#{ @linescore.xpath("//game/@away_time").first.value } #{ @linescore.xpath("//game/@away_time_zone").first.value }" if team == @away
 
-			"#{ xpath("//game/@home_time") } #{ xpath("//game/@home_time_zone") }"
+			"#{ @linescore.xpath("//game/@home_time").first.value } #{ @linescore.xpath("//game/@home_time_zone").first.value }"
 		end
 
 		# Preview, Pre-Game, In Progress, Final
 		def status
-			@status ||= @data.xpath("//game/@status").first.value
+			@status ||= @linescore.xpath("//game/@status").first.value
 		end
 
 		# [3, Top/Middle/Bottom/End]
 		def inning
-			[@data.xpath("//game/@inning"), @data.xpath("//game/@inning_state")]
+			[@linescore.xpath("//game/@inning").first.value, @linescore.xpath("//game/@inning_state").first.value]
 		end
 
 		def runners
@@ -56,60 +57,60 @@ module MLBGameday
 		end
 
 		def home_record
-			[xpath("//game/@home_win"), xpath("//game/@home_loss")].map(&:to_i)
+			[@linescore.xpath("//game/@home_win").first.value, @linescore.xpath("//game/@home_loss").first.value].map(&:to_i)
 		end
 
 		def away_record
-			[xpath("//game/@away_win"), xpath("//game/@away_loss")].map(&:to_i)
+			[@linescore.xpath("//game/@away_win").first.value, @linescore.xpath("//game/@away_loss").first.value].map(&:to_i)
 		end
 
 		def current_pitcher
 			return nil if !in_progress?
 
-			@api.pitcher xpath("//game/current_pitcher/@id")
+			@api.pitcher @linescore.xpath("//game/current_pitcher/@id").first.value
 		end
 
 		def opposing_pitcher
 			return nil if !in_progress?
 
-			@api.pitcher xpath("//game/opposing_pitcher/@id")
+			@api.pitcher @linescore.xpath("//game/opposing_pitcher/@id").first.value
 		end
 
 		def winning_pitcher
 			return nil if !over?
 
-			@api.pitcher xpath("//game/winning_pitcher/@id")
+			@api.pitcher @linescore.xpath("//game/winning_pitcher/@id").first.value
 		end
 
 		def losing_pitcher
 			return nil if !over?
 
-			@api.pitcher xpath("//game/losing_pitcher/@id")
+			@api.pitcher @linescore.xpath("//game/losing_pitcher/@id").first.value
 		end
 
 		def save_pitcher
 			return nil if !over?
 
-			@api.pitcher xpath("//game/save_pitcher/@id")
+			@api.pitcher @linescore.xpath("//game/save_pitcher/@id").first.value
 		end
 
 		def score
 			return [0, 0] if !in_progress? && !over?
 
-			[xpath("//game/@home_team_runs"), xpath("//game/@away_team_runs")].map(&:to_i)
+			[@linescore.xpath("//game/@home_team_runs").first.value, @linescore.xpath("//game/@away_team_runs").first.value].map(&:to_i)
 		end
 
 		def home_pitcher
 			case status
 			when "In Progress"
 				# The xpath changes based on which half of the inning it is
-				if xpath("//game/@top_inning") == "Y"
+				if @linescore.xpath("//game/@top_inning").first.value == "Y"
 					opposing_pitcher
 				else
 					current_pitcher
 				end
 			when "Preview", "Warmup", "Pre-Game"
-				@api.pitcher xpath("//game/home_probable_pitcher/@id")
+				@api.pitcher @linescore.xpath("//game/home_probable_pitcher/@id").first.value
 			when "Final"
 				home, away = score
 
@@ -131,13 +132,13 @@ module MLBGameday
 			case status
 			when "In Progress"
 				# The xpath changes based on which half of the inning it is
-				if xpath("//game/@top_inning") == "Y"
+				if @linescore.xpath("//game/@top_inning").first.value == "Y"
 					current_pitcher
 				else
 					opposing_pitcher
 				end
 			when "Preview", "Warmup", "Pre-Game"
-				@api.pitcher xpath("//game/away_probable_pitcher/@id")
+				@api.pitcher @linescore.xpath("//game/away_probable_pitcher/@id").first.value
 			when "Final"
 				home, away = score
 
@@ -155,10 +156,20 @@ module MLBGameday
 			end
 		end
 
-		private
+		def home_tv
+			@gamecenter.xpath("//game/broadcast/home/tv").first.content
+		end
 
-		def xpath(path)
-			@data.xpath(path).first.value
+		def away_tv
+			@gamecenter.xpath("//game/broadcast/away/tv").first.content
+		end
+
+		def home_radio
+			@gamecenter.xpath("//game/broadcast/home/radio").first.content
+		end
+
+		def away_radio
+			@gamecenter.xpath("//game/broadcast/away/radio").first.content
 		end
 	end
 end

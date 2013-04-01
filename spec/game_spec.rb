@@ -42,4 +42,16 @@ describe "An MLB Gameday Game object" do
 
 		expect(game.home_pitcher.name).to eq("Clayton Kershaw")
 	end
+
+	it "should be on Prime Ticket and ESPN in Los Angeles" do
+		game = @games[0]
+
+		expect(game.home_tv).to eq("PRIME, ESPN")
+	end
+
+	it "should be on KNBR 680 in San Francisco" do
+		game = @games[0]
+
+		expect(game.away_radio).to eq("KNBR 680")
+	end
 end
