@@ -173,5 +173,13 @@ module MLBGameday
 		def away_radio
 			@gamecenter.xpath("//game/broadcast/away/radio").first.content
 		end
+
+		def linescore
+			@linescore
+		end
+
+		def gamecenter
+			@gamecenter
+		end
 	end
 end
