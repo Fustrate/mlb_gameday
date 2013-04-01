@@ -27,14 +27,14 @@ describe "An MLB Gameday Game object" do
 	it "should start at the correct time for the home team" do
 		game = @games[0]
 
-		expect(game.start_time).to eq("1:10 PT")
+		expect(game.home_start_time).to eq("1:10 PT")
 	end
 
 	# TODO: Pick another game, LA and SF are both Pacific
 	it "should start at the correct time for the away team" do
 		game = @games[0]
 
-		expect(game.start_time(@giants)).to eq("1:10 PT")
+		expect(game.away_start_time).to eq("1:10 PT")
 	end
 
 	it "should have Clayton Kershaw starting" do
