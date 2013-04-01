@@ -1,8 +1,13 @@
 module MLBGameday
 	class Player
-		def initialize(api, data)
+		def initialize(api, id, data)
 			@api = api
+			@id = id
 			@data = data
+		end
+
+		def id
+			@id
 		end
 
 		protected
