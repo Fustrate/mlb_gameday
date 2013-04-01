@@ -25,10 +25,12 @@ module MLBGameday
 			@linescore.xpath("//game/@venue").first.value
 		end
 
-		def start_time(team = nil)
-			return "#{ @linescore.xpath("//game/@away_time").first.value } #{ @linescore.xpath("//game/@away_time_zone").first.value }" if team == @away
-
+		def home_start_time
 			"#{ @linescore.xpath("//game/@home_time").first.value } #{ @linescore.xpath("//game/@home_time_zone").first.value }"
+		end
+
+		def away_start_time
+			"#{ @linescore.xpath("//game/@away_time").first.value } #{ @linescore.xpath("//game/@away_time_zone").first.value }"
 		end
 
 		# Preview, Pre-Game, In Progress, Final
