@@ -62,8 +62,13 @@ module MLBGameday
 
 		def game(gid)
 			date = /\A(\d+)_(\d+)_(\d+)_/.match(gid)
+			date = DateTime.new(date[1].to_i, date[2].to_i, date[3].to_i)
 
-			MLBGameday::Game.new(self, fetch_gameday_xml(DateTime.new(date[1].to_i, date[2].to_i, date[3].to_i), gid))
+			MLBGameday::Game.new(
+				self,
+				gamecenter: fetch_gamecenter_xml(date, gid),
+				linescore: fetch_linescore_xml(date, gid)
+			)
 		end
 
 		def find_games(team: nil, date: nil)
@@ -73,14 +78,26 @@ module MLBGameday
 
 			if team.nil?
 				doc.xpath("//games/game").map do |game|
-					MLBGameday::Game.new(self, fetch_gameday_xml(date, game.xpath("@gameday_link").first.value))
+					gid = game.xpath("@gameday_link").first.value
+
+					MLBGameday::Game.new(
+						self,
+						gamecenter: fetch_gamecenter_xml(date, gid),
+						linescore: fetch_linescore_xml(date, gid)
+					)
 				end
 			else
 				team = team(team)
 
 				doc.xpath("//games/game").map do |game|
 					if [game.xpath("@home_name_abbrev").first.value, game.xpath("@away_name_abbrev").first.value].include? team.code
-						MLBGameday::Game.new(self, fetch_gameday_xml(date, game.xpath("@gameday_link")))
+						gid = game.xpath("@gameday_link").first.value
+
+						MLBGameday::Game.new(
+							self,
+							gamecenter: fetch_gamecenter_xml(date, gid),
+							linescore: fetch_linescore_xml(date, gid)
+						)
 					end
 				end.compact!
 			end
@@ -92,8 +109,12 @@ module MLBGameday
 			Nokogiri::XML(open(API_URL + date.strftime("/year_%Y/month_%m/day_%d/miniscoreboard.xml")))
 		end
 
-		def fetch_gameday_xml(date, gameday_link)
+		def fetch_linescore_xml(date, gameday_link)
 			Nokogiri::XML(open(API_URL + date.strftime("/year_%Y/month_%m/day_%d/gid_#{ gameday_link }/linescore.xml")))
+		end
+
+		def fetch_gamecenter_xml(date, gameday_link)
+			Nokogiri::XML(open(API_URL + date.strftime("/year_%Y/month_%m/day_%d/gid_#{ gameday_link }/gamecenter.xml")))
 		end
 
 		def fetch_batter_xml(id, year: nil)
