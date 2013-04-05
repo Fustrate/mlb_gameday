@@ -7,7 +7,7 @@ describe "An MLB Gameday Game object" do
 		@api = MLBGameday::API.new
 
 		@game = @api.find_games(team: "LAD", date: Date.parse("2013-04-01")).first
-		@free_game = @api.game("2013_04_01_slnmlb_arimlb_1").first
+		@free_game = @api.game("2013_04_01_slnmlb_arimlb_1")
 	end
 
 	it "should have two starting pitchers" do

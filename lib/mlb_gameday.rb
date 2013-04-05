@@ -116,7 +116,7 @@ module MLBGameday
 		def fetch_gamecenter_xml(date, gameday_link)
 			begin
 				Nokogiri::XML(open(API_URL + date.strftime("/year_%Y/month_%m/day_%d/gid_#{ gameday_link }/gamecenter.xml")))
-			catch Exception
+			rescue Exception
 				nil
 			end
 		end
