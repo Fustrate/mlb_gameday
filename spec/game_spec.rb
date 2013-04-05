@@ -6,52 +6,44 @@ describe "An MLB Gameday Game object" do
 	before :all do
 		@api = MLBGameday::API.new
 
-		@dodgers = @api.team("Dodgers")
-		@giants = @api.team("Giants")
-
-		@games = @api.find_games(team: @dodgers, date: Date.parse("2013-04-01"))
+		@game = @api.find_games(team: "LAD", date: Date.parse("2013-04-01")).first
+		@free_game = @api.game("2013_04_01_slnmlb_arimlb_1").first
 	end
 
 	it "should have two starting pitchers" do
-		game = @games[0]
-
-		expect(game.teams.count).to eq(2)
+		expect(@game.teams.count).to eq(2)
 	end
 
 	it "should have the correct venue" do
-		game = @games[0]
-
-		expect(game.venue).to eq("Dodger Stadium")
+		expect(@game.venue).to eq("Dodger Stadium")
 	end
 
 	it "should start at the correct time for the home team" do
-		game = @games[0]
-
-		expect(game.home_start_time).to eq("1:10 PT")
+		expect(@game.home_start_time).to eq("1:10 PT")
 	end
 
 	# TODO: Pick another game, LA and SF are both Pacific
 	it "should start at the correct time for the away team" do
-		game = @games[0]
-
-		expect(game.away_start_time).to eq("1:10 PT")
+		expect(@game.away_start_time).to eq("1:10 PT")
 	end
 
 	it "should have Clayton Kershaw starting" do
-		game = @games[0]
-
-		expect(game.home_pitcher.name).to eq("Clayton Kershaw")
+		expect(@game.home_pitcher.name).to eq("Clayton Kershaw")
 	end
 
 	it "should be on Prime Ticket and ESPN in Los Angeles" do
-		game = @games[0]
-
-		expect(game.home_tv).to eq("PRIME, ESPN")
+		expect(@game.home_tv).to eq("PRIME, ESPN")
 	end
 
 	it "should be on KNBR 680 in San Francisco" do
-		game = @games[0]
+		expect(@game.away_radio).to eq("KNBR 680")
+	end
 
-		expect(game.away_radio).to eq("KNBR 680")
+	it "should not be free" do
+		expect(@game.is_free?).to be_false
+	end
+
+	it "should have a free game" do
+		expect(@free_game.is_free?).to be_true
 	end
 end

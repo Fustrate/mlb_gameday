@@ -159,20 +159,31 @@ module MLBGameday
 		end
 
 		def home_tv
+			return nil if !@gamecenter
+
 			@gamecenter.xpath("//game/broadcast/home/tv").first.content
 		end
 
 		def away_tv
+			return nil if !@gamecenter
+
 			@gamecenter.xpath("//game/broadcast/away/tv").first.content
 		end
 
 		def home_radio
+			return nil if !@gamecenter
+
 			@gamecenter.xpath("//game/broadcast/home/radio").first.content
 		end
 
 		def away_radio
+			return nil if !@gamecenter
+
 			@gamecenter.xpath("//game/broadcast/away/radio").first.content
 		end
+
+		def is_free?
+			@linescore.xpath("//game/game_media/media/@free").first.value == "ALL"
 
 		def linescore
 			@linescore
