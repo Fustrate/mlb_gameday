@@ -184,6 +184,7 @@ module MLBGameday
 
 		def is_free?
 			@linescore.xpath("//game/game_media/media/@free").first.value == "ALL"
+		end
 
 		def linescore
 			@linescore
