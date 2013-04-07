@@ -61,13 +61,12 @@ module MLBGameday
 		end
 
 		def game(gid)
-			date = /\A(\d+)_(\d+)_(\d+)_/.match(gid)
-			date = DateTime.new(date[1].to_i, date[2].to_i, date[3].to_i)
-
 			MLBGameday::Game.new(
 				self,
-				gamecenter: fetch_gamecenter_xml(date, gid),
-				linescore: fetch_linescore_xml(date, gid)
+				gid,
+				gamecenter: fetch_gamecenter_xml(gid),
+				linescore: fetch_linescore_xml(gid),
+				boxscore: fetch_boxscore_xml(gid)
 			)
 		end
 
@@ -82,8 +81,10 @@ module MLBGameday
 
 					MLBGameday::Game.new(
 						self,
-						gamecenter: fetch_gamecenter_xml(date, gid),
-						linescore: fetch_linescore_xml(date, gid)
+						gid,
+						gamecenter: fetch_gamecenter_xml(gid),
+						linescore: fetch_linescore_xml(gid),
+						boxscore: fetch_boxscore_xml(gid)
 					)
 				end
 			else
@@ -95,30 +96,40 @@ module MLBGameday
 
 						MLBGameday::Game.new(
 							self,
-							gamecenter: fetch_gamecenter_xml(date, gid),
-							linescore: fetch_linescore_xml(date, gid)
+							gid,
+							gamecenter: fetch_gamecenter_xml(gid),
+							linescore: fetch_linescore_xml(gid),
+							boxscore: fetch_boxscore_xml(gid),
 						)
 					end
 				end.compact!
 			end
 		end
 
-		private
-
 		def fetch_scoreboard_xml(date)
 			Nokogiri::XML(open(API_URL + date.strftime("/year_%Y/month_%m/day_%d/miniscoreboard.xml")))
 		end
 
-		def fetch_linescore_xml(date, gameday_link)
-			Nokogiri::XML(open(API_URL + date.strftime("/year_%Y/month_%m/day_%d/gid_#{ gameday_link }/linescore.xml")))
+		def fetch_linescore_xml(gid)
+			year, month, day, _ = gid.split("_")
+
+			Nokogiri::XML(open(API_URL + "/year_#{ year }/month_#{ month }/day_#{ day }/gid_#{ gid }/linescore.xml"))
 		end
 
-		def fetch_gamecenter_xml(date, gameday_link)
-			begin
-				Nokogiri::XML(open(API_URL + date.strftime("/year_%Y/month_%m/day_%d/gid_#{ gameday_link }/gamecenter.xml")))
-			rescue Exception
-				nil
-			end
+		def fetch_boxscore_xml(gid)
+			year, month, day, _ = gid.split("_")
+
+			Nokogiri::XML(open(API_URL + "/year_#{ year }/month_#{ month }/day_#{ day }/gid_#{ gid }/boxscore.xml"))
+		rescue
+			nil
+		end
+
+		def fetch_gamecenter_xml(gid)
+			year, month, day, _ = gid.split("_")
+
+			Nokogiri::XML(open(API_URL + "/year_#{ year }/month_#{ month }/day_#{ day }/gid_#{ gid }/gamecenter.xml"))
+		rescue
+			nil
 		end
 
 		def fetch_batter_xml(id, year: nil)
@@ -127,10 +138,10 @@ module MLBGameday
 			# We only really want one piece of data from this file...
 			year_data = Nokogiri::XML(open(API_URL + "/year_#{ year }/batters/#{ id }.xml"))
 
-			game = year_data.xpath("//pitching/@game_id").first.value
-			year, month, day, _ = game.split("/")
+			gid = year_data.xpath("//pitching/@game_id").first.value
+			year, month, day, _ = gid.split("/")
 
-			Nokogiri::XML(open(MLBGameday::API_URL + "/year_#{ year }/month_#{ month }/day_#{ day }/gid_#{ game.gsub(/[^a-z0-9]/, "_") }/batters/#{ id }.xml"))
+			Nokogiri::XML(open(MLBGameday::API_URL + "/year_#{ year }/month_#{ month }/day_#{ day }/gid_#{ gid.gsub(/[^a-z0-9]/, "_") }/batters/#{ id }.xml"))
 		end
 
 		def fetch_pitcher_xml(id, year: nil)
@@ -139,10 +150,10 @@ module MLBGameday
 			# We only really want one piece of data from this file...
 			year_data = Nokogiri::XML(open(API_URL + "/year_#{ year }/pitchers/#{ id }.xml"))
 
-			game = year_data.xpath("//pitching/@game_id").first.value
-			year, month, day, _ = game.split("/")
+			gid = year_data.xpath("//pitching/@game_id").first.value
+			year, month, day, _ = gid.split("/")
 
-			Nokogiri::XML(open(MLBGameday::API_URL + "/year_#{ year }/month_#{ month }/day_#{ day }/gid_#{ game.gsub(/[^a-z0-9]/, "_") }/pitchers/#{ id }.xml"))
+			Nokogiri::XML(open(MLBGameday::API_URL + "/year_#{ year }/month_#{ month }/day_#{ day }/gid_#{ gid.gsub(/[^a-z0-9]/, "_") }/pitchers/#{ id }.xml"))
 		end
 	end
 end

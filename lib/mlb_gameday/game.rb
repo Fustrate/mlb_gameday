@@ -1,12 +1,15 @@
 module MLBGameday
 	class Game
-		def initialize(api, linescore: nil, gamecenter: nil)
+		def initialize(api, gid, linescore: nil, gamecenter: nil, boxscore: nil)
 			@api = api
-			@linescore = linescore
-			@gamecenter = gamecenter
+			@gid = gid
 
-			@home = @api.team(@linescore.xpath("//game/@home_name_abbrev").first.value)
-			@away = @api.team(@linescore.xpath("//game/@away_name_abbrev").first.value)
+			@linescore  = linescore
+			@gamecenter = gamecenter
+			@boxscore   = boxscore
+
+			@home = @api.team(linescore.xpath("//game/@home_name_abbrev").first.value)
+			@away = @api.team(linescore.xpath("//game/@away_name_abbrev").first.value)
 		end
 
 		def teams
@@ -192,6 +195,10 @@ module MLBGameday
 
 		def gamecenter
 			@gamecenter
+		end
+
+		def boxscore
+			@boxscore
 		end
 	end
 end
