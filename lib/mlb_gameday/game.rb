@@ -144,7 +144,7 @@ module MLBGameday
 				end
 			when "Preview", "Warmup", "Pre-Game"
 				@api.pitcher @linescore.xpath("//game/away_probable_pitcher/@id").first.value
-			when "Final"
+			when "Final", "Game Over"
 				home, away = score
 
 				if home > away
@@ -187,6 +187,10 @@ module MLBGameday
 
 		def is_free?
 			@linescore.xpath("//game/game_media/media/@free").first.value == "ALL"
+		end
+
+		def date
+			@date ||= DateTime.strptime(@linescore.xpath("//game/@original_date").first.value, '%Y/%m/%d').to_date
 		end
 
 		def linescore
