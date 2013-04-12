@@ -4,6 +4,7 @@
   divisions:
     :East: &aleast !ruby/object:MLBGameday::Division
       name: East
+      league: *al
       teams:
         :BAL: !ruby/object:MLBGameday::Team
           name: Orioles
@@ -71,6 +72,7 @@
           - toronto
     :Central: &alcentral !ruby/object:MLBGameday::Division
       name: Central
+      league: *al
       teams:
         :CLE: !ruby/object:MLBGameday::Team
           name: Indians
@@ -129,6 +131,7 @@
           - minnesota
     :West: &alwest !ruby/object:MLBGameday::Division
       name: West
+      league: *al
       teams:
         :ANA: !ruby/object:MLBGameday::Team
           name: Angels
@@ -199,6 +202,7 @@
   divisions:
     :East: &nleast !ruby/object:MLBGameday::Division
       name: East
+      league: *nl
       teams:
         :ATL: !ruby/object:MLBGameday::Team
           name: Braves
@@ -261,6 +265,7 @@
           - washington
     :Central: &nlcentral !ruby/object:MLBGameday::Division
       name: Central
+      league: *nl
       teams:
         :CHC: !ruby/object:MLBGameday::Team
           name: Cubs
@@ -323,6 +328,7 @@
           - st. louis
     :West: &nlwest !ruby/object:MLBGameday::Division
       name: West
+      league: *nl
       teams:
         :ARI: !ruby/object:MLBGameday::Team
           name: Diamondbacks
