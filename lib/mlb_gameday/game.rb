@@ -12,6 +12,10 @@ module MLBGameday
 			@away = @api.team(linescore.xpath("//game/@away_name_abbrev").first.value)
 		end
 
+		def gid
+			@gid
+		end
+
 		def teams
 			[@home, @away]
 		end
