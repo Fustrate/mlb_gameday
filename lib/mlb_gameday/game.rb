@@ -32,12 +32,20 @@ module MLBGameday
 			@linescore.xpath("//game/@venue").first.value
 		end
 
-		def home_start_time
-			"#{ @linescore.xpath("//game/@home_time").first.value } #{ @linescore.xpath("//game/@home_time_zone").first.value }"
+		def home_start_time(ampm: true)
+			if ampm
+				"#{ @linescore.xpath("//game/@home_time").first.value } #{ @linescore.xpath("//game/@home_ampm").first.value } #{ @linescore.xpath("//game/@home_time_zone").first.value }"
+			else
+				"#{ @linescore.xpath("//game/@home_time").first.value } #{ @linescore.xpath("//game/@home_time_zone").first.value }"
+			end
 		end
 
-		def away_start_time
-			"#{ @linescore.xpath("//game/@away_time").first.value } #{ @linescore.xpath("//game/@away_time_zone").first.value }"
+		def away_start_time(ampm: true)
+			if ampm
+				"#{ @linescore.xpath("//game/@away_time").first.value } #{ @linescore.xpath("//game/@away_ampm").first.value } #{ @linescore.xpath("//game/@away_time_zone").first.value }"
+			else
+				"#{ @linescore.xpath("//game/@away_time").first.value } #{ @linescore.xpath("//game/@away_time_zone").first.value }"
+			end
 		end
 
 		# Preview, Pre-Game, In Progress, Final
@@ -47,7 +55,9 @@ module MLBGameday
 
 		# [3, Top/Middle/Bottom/End]
 		def inning
-			[@linescore.xpath("//game/@inning").first.value, @linescore.xpath("//game/@inning_state").first.value]
+			return [0, '?'] if @linescore.xpath("//game/@inning").nil?
+
+			[@linescore.xpath("//game/@inning").first.value.to_i, @linescore.xpath("//game/@inning_state").first.value]
 		end
 
 		def runners
