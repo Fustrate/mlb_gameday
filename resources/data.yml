@@ -133,12 +133,12 @@
       name: West
       league: *al
       teams:
-        :ANA: !ruby/object:MLBGameday::Team
+        :LAA: !ruby/object:MLBGameday::Team
           name: Angels
           city: Anaheim
           league: *al
           division: *alwest
-          code: ANA
+          code: LAA
           names:
           - ana
           - angels
