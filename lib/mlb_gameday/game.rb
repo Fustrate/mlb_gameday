@@ -218,5 +218,10 @@ module MLBGameday
 		def boxscore
 			@boxscore
 		end
+
+		# So we don't get huge printouts
+		def inspect
+			%Q{#<MLBGameday::Game @gid="#{@gid}">}
+		end
 	end
 end
