@@ -1,21 +1,11 @@
 module MLBGameday
-	class Division
-		def initialize(league, name, teams)
-			@league = league
-			@name = name
-			@teams = teams
-		end
+  class Division
+    attr_reader :league, :name, :teams
 
-		def league
-			@league
-		end
-
-		def name
-			@name
-		end
-
-		def teams
-			@teams
-		end
-	end
+    def initialize(league, name, teams)
+      @league = league
+      @name = name
+      @teams = teams
+    end
+  end
 end

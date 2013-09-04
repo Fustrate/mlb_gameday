@@ -12,6 +12,7 @@
           league: *al
           division: *aleast
           code: BAL
+          file_code: bal
           names:
           - bal
           - orioles
@@ -23,6 +24,7 @@
           league: *al
           division: *aleast
           code: BOS
+          file_code: bos
           names:
           - bos
           - red sox
@@ -35,6 +37,7 @@
           league: *al
           division: *aleast
           code: NYY
+          file_code: nyy
           names:
           - nyy
           - yankees
@@ -47,6 +50,7 @@
           league: *al
           division: *aleast
           code: TB
+          file_code: tb
           names:
           - tb
           - rays
@@ -61,6 +65,7 @@
           league: *al
           division: *aleast
           code: TOR
+          file_code: tor
           names:
           - tor
           - blue jays
@@ -80,6 +85,7 @@
           league: *al
           division: *alcentral
           code: CLE
+          file_code: cle
           names:
           - cle
           - indians
@@ -91,6 +97,7 @@
           league: *al
           division: *alcentral
           code: CWS
+          file_code: cws
           names:
           - cws
           - white sox
@@ -101,6 +108,7 @@
           league: *al
           division: *alcentral
           code: DET
+          file_code: det
           names:
           - det
           - tigers
@@ -112,6 +120,7 @@
           league: *al
           division: *alcentral
           code: KC
+          file_code: kc
           names:
           - kc
           - royals
@@ -124,6 +133,7 @@
           league: *al
           division: *alcentral
           code: MIN
+          file_code: min
           names:
           - min
           - twins
@@ -139,6 +149,7 @@
           league: *al
           division: *alwest
           code: LAA
+          file_code: ana
           names:
           - ana
           - angels
@@ -158,6 +169,7 @@
           league: *al
           division: *alwest
           code: HOU
+          file_code: hou
           names:
           - hou
           - astros
@@ -169,6 +181,7 @@
           league: *al
           division: *alwest
           code: OAK
+          file_code: oak
           names:
           - oak
           - athletics
@@ -181,6 +194,7 @@
           league: *al
           division: *alwest
           code: SEA
+          file_code: sea
           names:
           - sea
           - mariners
@@ -192,6 +206,7 @@
           league: *al
           division: *alwest
           code: TEX
+          file_code: tex
           names:
           - tex
           - rangers
@@ -210,6 +225,7 @@
           league: *nl
           division: *nleast
           code: ATL
+          file_code: atl
           names:
           - atl
           - braves
@@ -221,6 +237,7 @@
           league: *nl
           division: *nleast
           code: MIA
+          file_code: mia
           names:
           - mia
           - marlins
@@ -233,6 +250,7 @@
           league: *nl
           division: *nleast
           code: NYM
+          file_code: nym
           names:
           - nym
           - mets
@@ -245,6 +263,7 @@
           league: *nl
           division: *nleast
           code: PHI
+          file_code: phi
           names:
           - phi
           - phillies
@@ -257,6 +276,7 @@
           league: *nl
           division: *nleast
           code: WSH
+          file_code: wsh
           names:
           - wsh
           - nationals
@@ -273,6 +293,7 @@
           league: *nl
           division: *nlcentral
           code: CHC
+          file_code: chc
           names:
           - chc
           - cubs
@@ -285,6 +306,7 @@
           league: *nl
           division: *nlcentral
           code: CIN
+          file_code: cin
           names:
           - cin
           - reds
@@ -296,6 +318,7 @@
           league: *nl
           division: *nlcentral
           code: MIL
+          file_code: mil
           names:
           - mil
           - brewers
@@ -307,6 +330,7 @@
           league: *nl
           division: *nlcentral
           code: PIT
+          file_code: pit
           names:
           - pit
           - pirates
@@ -320,6 +344,7 @@
           league: *nl
           division: *nlcentral
           code: STL
+          file_code: stl
           names:
           - stl
           - cardinals
@@ -336,6 +361,7 @@
           league: *nl
           division: *nlwest
           code: ARI
+          file_code: ari
           names:
           - ari
           - diamondbacks
@@ -350,6 +376,7 @@
           league: *nl
           division: *nlwest
           code: COL
+          file_code: col
           names:
           - col
           - rockies
@@ -361,6 +388,7 @@
           league: *nl
           division: *nlwest
           code: LAD
+          file_code: la
           names:
           - lad
           - dodgers
@@ -377,6 +405,7 @@
           league: *nl
           division: *nlwest
           code: SD
+          file_code: sd
           names:
           - sd
           - padres
@@ -388,6 +417,7 @@
           league: *nl
           division: *nlwest
           code: SF
+          file_code: sf
           names:
           - sf
           - giants

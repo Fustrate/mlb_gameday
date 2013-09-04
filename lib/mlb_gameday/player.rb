@@ -1,19 +1,17 @@
 module MLBGameday
-	class Player
-		def initialize(api, id, data)
-			@api = api
-			@id = id
-			@data = data
-		end
+  class Player
+    attr_reader :id, :data
 
-		def id
-			@id
-		end
+    def initialize(api, id, data)
+      @api = api
+      @id = id
+      @data = data
+    end
 
-		protected
+    protected
 
-		def xpath(path)
-			@data.xpath(path).first.value
-		end
-	end
+    def xpath(path)
+      @data.xpath(path).first.value
+    end
+  end
 end
