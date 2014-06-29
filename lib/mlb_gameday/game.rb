@@ -58,7 +58,7 @@ module MLBGameday
     end
 
     def over?
-      status == 'Final' || status == 'Game Over'
+      ['Final', 'Game Over', 'Completed Early'].include? status
     end
     alias_method :fat_lady_has_sung?, :over?
 
