@@ -10,8 +10,8 @@ module MLBGameday
       @gamecenter = gamecenter
       @boxscore   = boxscore
 
-      @home_team = @api.team(linescore.xpath('//game/@home_name_abbrev').first.value)
-      @away_team = @api.team(linescore.xpath('//game/@away_name_abbrev').first.value)
+      @home_team = @api.team linescore.xpath('//game/@home_name_abbrev').text
+      @away_team = @api.team linescore.xpath('//game/@away_name_abbrev').text
     end
 
     def teams
@@ -19,35 +19,36 @@ module MLBGameday
     end
 
     def venue
-      @linescore.xpath('//game/@venue').first.value
+      @linescore.xpath('//game/@venue').text
     end
 
     def home_start_time(ampm: true)
       if ampm
-        "#{ @linescore.xpath('//game/@home_time').first.value } #{ @linescore.xpath('//game/@home_ampm').first.value } #{ @linescore.xpath('//game/@home_time_zone').first.value }"
+        "#{@linescore.xpath('//game/@home_time').text} #{@linescore.xpath('//game/@home_ampm').text} #{@linescore.xpath('//game/@home_time_zone').text}"
       else
-        "#{ @linescore.xpath('//game/@home_time').first.value } #{ @linescore.xpath('//game/@home_time_zone').first.value }"
+        "#{@linescore.xpath('//game/@home_time').text} #{@linescore.xpath('//game/@home_time_zone').text}"
       end
     end
 
     def away_start_time(ampm: true)
       if ampm
-        "#{ @linescore.xpath('//game/@away_time').first.value } #{ @linescore.xpath('//game/@away_ampm').first.value } #{ @linescore.xpath('//game/@away_time_zone').first.value }"
+        "#{@linescore.xpath('//game/@away_time').text} #{@linescore.xpath('//game/@away_ampm').text} #{@linescore.xpath('//game/@away_time_zone').text}"
       else
-        "#{ @linescore.xpath('//game/@away_time').first.value } #{ @linescore.xpath('//game/@away_time_zone').first.value }"
+        "#{@linescore.xpath('//game/@away_time').text} #{@linescore.xpath('//game/@away_time_zone').text}"
       end
     end
 
     # Preview, Pre-Game, In Progress, Final
     def status
-      @status ||= @linescore.xpath('//game/@status').first.value
+      @status ||= @linescore.xpath('//game/@status').text
     end
 
     # [3, Top/Middle/Bottom/End]
     def inning
-      return [0, '?'] if @linescore.xpath('//game/@inning').nil?
+      return [0, '?'] unless @linescore.xpath('//game/@inning')
 
-      [@linescore.xpath('//game/@inning').first.value.to_i, @linescore.xpath('//game/@inning_state').first.value]
+      [@linescore.xpath('//game/@inning').text.to_i,
+       @linescore.xpath('//game/@inning_state').text]
     end
 
     def runners
@@ -66,56 +67,73 @@ module MLBGameday
     end
 
     def home_record
-      [@linescore.xpath('//game/@home_win').first.value, @linescore.xpath('//game/@home_loss').first.value].map(&:to_i)
+      [@linescore.xpath('//game/@home_win'),
+       @linescore.xpath('//game/@home_loss')].map(&:text).map(&:to_i)
     end
 
     def away_record
-      [@linescore.xpath('//game/@away_win').first.value, @linescore.xpath('//game/@away_loss').first.value].map(&:to_i)
+      [@linescore.xpath('//game/@away_win'),
+       @linescore.xpath('//game/@away_loss')].map(&:text).map(&:to_i)
     end
 
     def current_pitcher
       return nil unless in_progress?
 
-      @api.pitcher @linescore.xpath('//game/current_pitcher/@id').first.value
+      @api.pitcher @linescore.xpath('//game/current_pitcher/@id').text
     end
 
     def opposing_pitcher
       return nil unless in_progress?
 
-      @api.pitcher @linescore.xpath('//game/opposing_pitcher/@id').first.value
+      @api.pitcher @linescore.xpath('//game/opposing_pitcher/@id').text
     end
 
     def winning_pitcher
       return nil unless over?
 
-      @api.pitcher @linescore.xpath('//game/winning_pitcher/@id').first.value
+      @api.pitcher @linescore.xpath('//game/winning_pitcher/@id').text
     end
 
     def losing_pitcher
       return nil unless over?
 
-      @api.pitcher @linescore.xpath('//game/losing_pitcher/@id').first.value
+      @api.pitcher @linescore.xpath('//game/losing_pitcher/@id').text
     end
 
     def save_pitcher
       return nil unless over?
 
-      @api.pitcher @linescore.xpath('//game/save_pitcher/@id').first.value
+      @api.pitcher @linescore.xpath('//game/save_pitcher/@id').text
+    end
+
+    def away_starting_pitcher
+      @linescore.xpath('//game/away_probable_pitcher/@id').text
+    end
+
+    def home_starting_pitcher
+      @linescore.xpath('//game/home_probable_pitcher/@id').text
     end
 
     def score
       return [0, 0] unless in_progress? || over?
 
-      [@linescore.xpath('//game/@home_team_runs').first.value, @linescore.xpath('//game/@away_team_runs').first.value].map(&:to_i)
+      [@linescore.xpath('//game/@home_team_runs').text,
+       @linescore.xpath('//game/@away_team_runs').text].map(&:to_i)
     end
 
     def home_pitcher
+      # Spring training games can end in ties, in which case there's
+      # really no pitching data. This should really return a null object.
       case status
       when 'In Progress'
         # The xpath changes based on which half of the inning it is
-        @linescore.xpath('//game/@top_inning').first.value == 'Y' ? opposing_pitcher : current_pitcher
+        if @linescore.xpath('//game/@top_inning').text == 'Y'
+          opposing_pitcher
+        else
+          current_pitcher
+        end
       when 'Preview', 'Warmup', 'Pre-Game'
-        @api.pitcher @linescore.xpath('//game/home_probable_pitcher/@id').first.value
+        @api.pitcher home_starting_pitcher
       when 'Final'
         home, away = score
 
@@ -123,23 +141,23 @@ module MLBGameday
           winning_pitcher
         elsif away > home
           losing_pitcher
-        else
-          # Spring training games can end in ties, in which case there's really no pitching data
-          # See: http://gd2.mlb.com/components/game/mlb/year_2013/month_03/day_07/gid_2013_03_07_texmlb_lanmlb_1/linescore.xml
-          # This should really give a null object pitcher back
-          nil
         end
-      else
       end
     end
 
     def away_pitcher
+      # Spring training games can end in ties, in which case there's
+      # really no pitching data. This should really return a null object.
       case status
       when 'In Progress'
         # The xpath changes based on which half of the inning it is
-        @linescore.xpath('//game/@top_inning').first.value == 'Y' ? current_pitcher : opposing_pitcher
+        if @linescore.xpath('//game/@top_inning').text == 'Y'
+          current_pitcher
+        else
+          opposing_pitcher
+        end
       when 'Preview', 'Warmup', 'Pre-Game'
-        @api.pitcher @linescore.xpath('//game/away_probable_pitcher/@id').first.value
+        @api.pitcher away_starting_pitcher
       when 'Final', 'Game Over'
         home, away = score
 
@@ -147,51 +165,45 @@ module MLBGameday
           losing_pitcher
         elsif away > home
           winning_pitcher
-        else
-          # Spring training games can end in ties, in which case there's really no pitching data
-          # See: http://gd2.mlb.com/components/game/mlb/year_2013/month_03/day_07/gid_2013_03_07_texmlb_lanmlb_1/linescore.xml
-          # This should really give a null object pitcher back
-          nil
         end
-      else
       end
     end
 
     def home_tv
       return nil unless @gamecenter
 
-      @gamecenter.xpath('//game/broadcast/home/tv').first.content
+      @gamecenter.xpath('//game/broadcast/home/tv').text
     end
 
     def away_tv
       return nil unless @gamecenter
 
-      @gamecenter.xpath('//game/broadcast/away/tv').first.content
+      @gamecenter.xpath('//game/broadcast/away/tv').text
     end
 
     def home_radio
       return nil unless @gamecenter
 
-      @gamecenter.xpath('//game/broadcast/home/radio').first.content
+      @gamecenter.xpath('//game/broadcast/home/radio').text
     end
 
     def away_radio
       return nil unless @gamecenter
 
-      @gamecenter.xpath('//game/broadcast/away/radio').first.content
+      @gamecenter.xpath('//game/broadcast/away/radio').text
     end
 
-    def is_free?
-      @linescore.xpath('//game/game_media/media/@free').first.value == 'ALL'
+    def free?
+      @linescore.xpath('//game/game_media/media/@free').text == 'ALL'
     end
 
     def date
-      @date ||= DateTime.strptime(@linescore.xpath('//game/@original_date').first.value, '%Y/%m/%d').to_date
+      @date ||= DateTime.strptime(@linescore.xpath('//game/@original_date').text, '%Y/%m/%d').to_date
     end
 
     # So we don't get huge printouts
     def inspect
-      %Q{#<MLBGameday::Game @gid="#{@gid}">}
+      %Q(#<MLBGameday::Game @gid="#{@gid}">)
     end
   end
 end

@@ -3,19 +3,26 @@ require 'nokogiri'
 require 'open-uri'
 require 'yaml'
 
-%w{version league division team game player pitcher batter}.each do |file|
-  require "mlb_gameday/#{ file }"
+%w(version league division team game player pitcher batter).each do |file|
+  require "mlb_gameday/#{file}"
 end
 
 module MLBGameday
   API_URL = 'http://gd2.mlb.com/components/game/mlb'
+
+  BATTER = '/year_%{year}/batters/%{id}.xml'
+  PITCHER = '/year_%{year}/pitchers/%{id}.xml'
+  BOXSCORE = '/year_%{year}/month_%{month}/day_%{day}/gid_%{gid}/boxscore.xml'
+  GAMECENTER = '/year_%{year}/month_%{month}/day_%{day}/gid_%{gid}/gamecenter.xml'
+  LINESCORE = '/year_%{year}/month_%{month}/day_%{day}/gid_%{gid}/linescore.xml'
+  SCOREBOARD = '/year_%Y/month_%m/day_%d/miniscoreboard.xml'
 
   class API
     attr_reader :leagues
 
     def initialize
       # File File File File File File File File File File File File File File File
-      @leagues = YAML.load File.open(File.join(File.dirname(File.expand_path(__FILE__)), '../resources/data.yml'))
+      @leagues = YAML.load File.open File.join File.dirname(File.expand_path(__FILE__)), '../resources/data.yml'
     end
 
     def league(name)
@@ -43,115 +50,139 @@ module MLBGameday
     end
 
     def divisions
-      @divisions ||= @leagues[:AL].divisions.values + @leagues[:NL].divisions.values
+      @divisions ||= @leagues[:AL].divisions.values +
+                     @leagues[:NL].divisions.values
     end
 
     def pitcher(id)
       return nil if id.empty?
 
-      MLBGameday::Pitcher.new(self, id, fetch_pitcher_xml(id))
+      MLBGameday::Pitcher.new id: id, xml: pitcher_xml(id)
     end
 
     def batter(id)
       return nil if id.empty?
 
-      MLBGameday::Batter.new(self, id, fetch_batter_xml(id))
+      MLBGameday::Batter.new id: id, xml: batter_xml(id)
     end
 
     def game(gid)
       MLBGameday::Game.new(
         self,
         gid,
-        gamecenter: fetch_gamecenter_xml(gid),
-        linescore: fetch_linescore_xml(gid),
-        boxscore: fetch_boxscore_xml(gid)
+        gamecenter: gamecenter_xml(gid),
+        linescore: linescore_xml(gid),
+        boxscore: boxscore_xml(gid)
       )
     end
 
     def find_games(team: nil, date: nil)
-      date = Date.today if date.nil?
+      date ||= Date.today
 
-      doc = fetch_scoreboard_xml(date)
+      doc = scoreboard_xml(date)
 
-      if team.nil?
-        doc.xpath('//games/game').map do |game|
-          gid = game.xpath('@gameday_link').first.value
-
-          MLBGameday::Game.new(
-            self,
-            gid,
-            gamecenter: fetch_gamecenter_xml(gid),
-            linescore: fetch_linescore_xml(gid),
-            boxscore: fetch_boxscore_xml(gid)
-          )
-        end
-      else
+      if team
         team = team(team)
 
         doc.xpath('//games/game').map do |game|
-          if [game.xpath('@home_name_abbrev').first.value, game.xpath('@away_name_abbrev').first.value].include? team.code
-            gid = game.xpath('@gameday_link').first.value
+          if [game.xpath('@home_name_abbrev').text,
+              game.xpath('@away_name_abbrev').text].include? team.code
+            gid = game.xpath('@gameday_link').text
 
             MLBGameday::Game.new(
               self,
               gid,
-              gamecenter: fetch_gamecenter_xml(gid),
-              linescore: fetch_linescore_xml(gid),
-              boxscore: fetch_boxscore_xml(gid),
+              gamecenter: gamecenter_xml(gid),
+              linescore: linescore_xml(gid),
+              boxscore: boxscore_xml(gid),
             )
           end
         end.compact!
+      else
+        doc.xpath('//games/game').map do |game|
+          gid = game.xpath('@gameday_link').to_s
+
+          MLBGameday::Game.new(
+            self,
+            gid,
+            gamecenter: gamecenter_xml(gid),
+            linescore: linescore_xml(gid),
+            boxscore: boxscore_xml(gid)
+          )
+        end
       end
     end
 
-    def fetch_scoreboard_xml(date)
-      Nokogiri::XML(open(API_URL + date.strftime('/year_%Y/month_%m/day_%d/miniscoreboard.xml')))
+    def scoreboard_xml(date)
+      fetch_xml date.strftime SCOREBOARD
     end
 
-    def fetch_linescore_xml(gid)
-      year, month, day, _ = gid.split('_')
+    def linescore_xml(gid)
+      year, month, day, _ = gid.split '_'
 
-      Nokogiri::XML(open(API_URL + "/year_#{ year }/month_#{ month }/day_#{ day }/gid_#{ gid }/linescore.xml"))
+      fetch_xml LINESCORE,
+                year: year,
+                month: month,
+                day: day,
+                gid: gid
     end
 
-    def fetch_boxscore_xml(gid)
-      year, month, day, _ = gid.split('_')
+    def boxscore_xml(gid)
+      year, month, day, _ = gid.split '_'
 
-      Nokogiri::XML(open(API_URL + "/year_#{ year }/month_#{ month }/day_#{ day }/gid_#{ gid }/boxscore.xml"))
+      fetch_xml BOXSCORE,
+                year: year,
+                month: month,
+                day: day,
+                gid: gid
     rescue
       nil
     end
 
-    def fetch_gamecenter_xml(gid)
-      year, month, day, _ = gid.split('_')
+    def gamecenter_xml(gid)
+      year, month, day, _ = gid.split '_'
 
-      Nokogiri::XML(open(API_URL + "/year_#{ year }/month_#{ month }/day_#{ day }/gid_#{ gid }/gamecenter.xml"))
+      fetch_xml GAMECENTER,
+                year: year,
+                month: month,
+                day: day,
+                gid: gid
     rescue
       nil
     end
 
-    def fetch_batter_xml(id, year: nil)
-      year = Date.today.year if year.nil?
+    def batter_xml(id, year: nil)
+      year ||= Date.today.year
 
       # We only really want one piece of data from this file...
-      year_data = Nokogiri::XML(open(API_URL + "/year_#{ year }/batters/#{ id }.xml"))
+      year_data = fetch_xml BATTER,
+                            id: id,
+                            year: year
 
-      gid = year_data.xpath('//batting/@game_id').first.value
-      year, month, day, _ = gid.split('/')
+      gid = year_data.xpath('//batting/@game_id').text
+      year, month, day, _ = gid.split '/'
 
-      Nokogiri::XML(open(MLBGameday::API_URL + "/year_#{ year }/month_#{ month }/day_#{ day }/gid_#{ gid.gsub(/[^a-z0-9]/, "_") }/batters/#{ id }.xml"))
+      fetch_xml "/year_#{ year }/month_#{ month }/day_#{ day }/gid_#{ gid.gsub(/[^a-z0-9]/, "_") }/batters/#{ id }.xml"
     end
 
-    def fetch_pitcher_xml(id, year: nil)
-      year = Date.today.year if year.nil?
+    def pitcher_xml(id, year: nil)
+      year ||= Date.today.year
 
       # We only really want one piece of data from this file...
-      year_data = Nokogiri::XML(open(API_URL + "/year_#{ year }/pitchers/#{ id }.xml"))
+      year_data = fetch_xml PITCHER,
+                            id: id,
+                            year: year
 
-      gid = year_data.xpath('//pitching/@game_id').first.value
-      year, month, day, _ = gid.split('/')
+      gid = year_data.xpath('//pitching/@game_id').text
+      year, month, day, _ = gid.split '/'
 
-      Nokogiri::XML(open(MLBGameday::API_URL + "/year_#{ year }/month_#{ month }/day_#{ day }/gid_#{ gid.gsub(/[^a-z0-9]/, "_") }/pitchers/#{ id }.xml"))
+      fetch_xml "/year_#{ year }/month_#{ month }/day_#{ day }/gid_#{ gid.gsub(/[^a-z0-9]/, "_") }/pitchers/#{ id }.xml"
+    end
+
+    protected
+
+    def fetch_xml(path, interpolations = {})
+      Nokogiri::XML open format(API_URL + path, interpolations)
     end
   end
 end

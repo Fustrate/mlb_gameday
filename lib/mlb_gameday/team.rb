@@ -13,7 +13,7 @@ module MLBGameday
 
     # So we don't get huge printouts
     def inspect
-      %Q{#<MLBGameday::Team @name="#{@name}">}
+      %Q(#<MLBGameday::Team @name="#{@name}">)
     end
   end
 end

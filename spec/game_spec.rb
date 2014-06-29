@@ -40,7 +40,7 @@ describe 'An MLB Gameday Game object' do
   end
 
   it 'should not be free' do
-    expect(@game.is_free?).to be_false
+    expect(@game.free?).to be_false
   end
 
   it 'should have a free game' do

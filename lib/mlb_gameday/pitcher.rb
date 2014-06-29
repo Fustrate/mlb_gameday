@@ -1,39 +1,35 @@
 module MLBGameday
   class Pitcher < Player
-    def name
-      xpath('//Player//@first_name') + ' ' + xpath('//Player//@last_name')
-    end
-
     def era
-      xpath('//Player/season/@era')
+      @data.xpath('//Player/season/@era').text.to_f
     end
 
     def wins
-      xpath('//Player/season/@w')
+      @data.xpath('//Player/season/@w').text.to_i
     end
 
     def losses
-      xpath('//Player/season/@l')
+      @data.xpath('//Player/season/@l').text.to_i
     end
 
     def innings
-      xpath('//Player/season/@ip')
+      @data.xpath('//Player/season/@ip').text.to_f
     end
 
     def saves
-      xpath('//Player/season/@sv')
+      @data.xpath('//Player/season/@sv').text.to_i
     end
 
     def whip
-      xpath('//Player/season/@whip')
+      @data.xpath('//Player/season/@whip').text.to_f
     end
 
     def strikeouts
-      xpath('//Player/season/@so')
+      @data.xpath('//Player/season/@so').text.to_i
     end
 
     def walks
-      xpath('//Player/season/@bb')
+      @data.xpath('//Player/season/@bb').text.to_i
     end
   end
 end

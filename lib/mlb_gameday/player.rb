@@ -2,16 +2,21 @@ module MLBGameday
   class Player
     attr_reader :id, :data
 
-    def initialize(api, id, data)
-      @api = api
+    def initialize(id:, xml:)
       @id = id
-      @data = data
+      @data = xml
     end
 
-    protected
+    def first_name
+      @data.xpath('//Player//@first_name').text
+    end
 
-    def xpath(path)
-      @data.xpath(path).first.value
+    def last_name
+      @data.xpath('//Player//@last_name').text
+    end
+
+    def name
+      "#{first_name} #{last_name}"
     end
   end
 end
