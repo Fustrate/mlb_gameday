@@ -1,4 +1,7 @@
 module MLBGameday
+  # This class is just too long. It might be able to be split up, but it's not
+  # likely to happen any time soon. For now, we'll disable the cop.
+  # rubocop:disable Metrics/ClassLength
   class Game
     attr_reader :gid, :home_team, :away_team, :linescore, :gamecenter, :boxscore
 
@@ -24,17 +27,31 @@ module MLBGameday
 
     def home_start_time(ampm: true)
       if ampm
-        "#{@linescore.xpath('//game/@home_time').text} #{@linescore.xpath('//game/@home_ampm').text} #{@linescore.xpath('//game/@home_time_zone').text}"
+        [
+          @linescore.xpath('//game/@home_time').text,
+          @linescore.xpath('//game/@home_ampm').text,
+          @linescore.xpath('//game/@home_time_zone').text
+        ].join ' '
       else
-        "#{@linescore.xpath('//game/@home_time').text} #{@linescore.xpath('//game/@home_time_zone').text}"
+        [
+          @linescore.xpath('//game/@home_time').text,
+          @linescore.xpath('//game/@home_time_zone').text
+        ].join ' '
       end
     end
 
     def away_start_time(ampm: true)
       if ampm
-        "#{@linescore.xpath('//game/@away_time').text} #{@linescore.xpath('//game/@away_ampm').text} #{@linescore.xpath('//game/@away_time_zone').text}"
+        [
+          @linescore.xpath('//game/@away_time').text,
+          @linescore.xpath('//game/@away_ampm').text,
+          @linescore.xpath('//game/@away_time_zone').text
+        ].join ' '
       else
-        "#{@linescore.xpath('//game/@away_time').text} #{@linescore.xpath('//game/@away_time_zone').text}"
+        [
+          @linescore.xpath('//game/@away_time').text,
+          @linescore.xpath('//game/@away_time_zone').text
+        ].join ' '
       end
     end
 
@@ -137,11 +154,7 @@ module MLBGameday
       when 'Final'
         home, away = score
 
-        if home > away
-          winning_pitcher
-        elsif away > home
-          losing_pitcher
-        end
+        home > away ? winning_pitcher : losing_pitcher
       end
     end
 
@@ -161,11 +174,7 @@ module MLBGameday
       when 'Final', 'Game Over'
         home, away = score
 
-        if home > away
-          losing_pitcher
-        elsif away > home
-          winning_pitcher
-        end
+        home > away ? losing_pitcher : winning_pitcher
       end
     end
 
@@ -198,12 +207,12 @@ module MLBGameday
     end
 
     def date
-      @date ||= DateTime.strptime(@linescore.xpath('//game/@original_date').text, '%Y/%m/%d').to_date
+      @date ||= Chronic.parse @linescore.xpath('//game/@original_date').text
     end
 
     # So we don't get huge printouts
     def inspect
-      %Q(#<MLBGameday::Game @gid="#{@gid}">)
+      %(#<MLBGameday::Game @gid="#{@gid}">)
     end
   end
 end

@@ -10,19 +10,20 @@ end
 module MLBGameday
   API_URL = 'http://gd2.mlb.com/components/game/mlb'
 
-  BATTER = '/year_%{year}/batters/%{id}.xml'
-  PITCHER = '/year_%{year}/pitchers/%{id}.xml'
-  BOXSCORE = '/year_%{year}/month_%{month}/day_%{day}/gid_%{gid}/boxscore.xml'
-  GAMECENTER = '/year_%{year}/month_%{month}/day_%{day}/gid_%{gid}/gamecenter.xml'
-  LINESCORE = '/year_%{year}/month_%{month}/day_%{day}/gid_%{gid}/linescore.xml'
-  SCOREBOARD = '/year_%Y/month_%m/day_%d/miniscoreboard.xml'
+  BATTER = '/year_%{year}/batters/%{id}'
+  PITCHER = '/year_%{year}/pitchers/%{id}'
+  BOXSCORE = '/year_%{year}/month_%{month}/day_%{day}/gid_%{gid}/boxscore'
+  GAMECENTER = '/year_%{year}/month_%{month}/day_%{day}/gid_%{gid}/gamecenter'
+  LINESCORE = '/year_%{year}/month_%{month}/day_%{day}/gid_%{gid}/linescore'
+  SCOREBOARD = '/year_%Y/month_%m/day_%d/miniscoreboard'
 
   class API
     attr_reader :leagues
 
     def initialize
-      # File File File File File File File File File File File File File File File
-      @leagues = YAML.load File.open File.join File.dirname(File.expand_path(__FILE__)), '../resources/data.yml'
+      @leagues = YAML.load File.open File.join(
+        File.dirname(File.expand_path __FILE__), '../resources/data.yml'
+      )
     end
 
     def league(name)
@@ -77,38 +78,20 @@ module MLBGameday
     end
 
     def find_games(team: nil, date: nil)
-      date ||= Date.today
-
-      doc = scoreboard_xml(date)
+      doc = scoreboard_xml(date || Date.today)
 
       if team
-        team = team(team)
+        code = team(team).code
 
         doc.xpath('//games/game').map do |game|
-          if [game.xpath('@home_name_abbrev').text,
-              game.xpath('@away_name_abbrev').text].include? team.code
-            gid = game.xpath('@gameday_link').text
+          next unless [game.xpath('@home_name_abbrev').text,
+                       game.xpath('@away_name_abbrev').text].include? code
 
-            MLBGameday::Game.new(
-              self,
-              gid,
-              gamecenter: gamecenter_xml(gid),
-              linescore: linescore_xml(gid),
-              boxscore: boxscore_xml(gid),
-            )
-          end
+          game game.xpath('@gameday_link').text
         end.compact!
       else
         doc.xpath('//games/game').map do |game|
-          gid = game.xpath('@gameday_link').to_s
-
-          MLBGameday::Game.new(
-            self,
-            gid,
-            gamecenter: gamecenter_xml(gid),
-            linescore: linescore_xml(gid),
-            boxscore: boxscore_xml(gid)
-          )
+          game game.xpath('@gameday_link').to_s
         end
       end
     end
@@ -120,21 +103,13 @@ module MLBGameday
     def linescore_xml(gid)
       year, month, day, _ = gid.split '_'
 
-      fetch_xml LINESCORE,
-                year: year,
-                month: month,
-                day: day,
-                gid: gid
+      fetch_xml LINESCORE, year: year, month: month, day: day, gid: gid
     end
 
     def boxscore_xml(gid)
       year, month, day, _ = gid.split '_'
 
-      fetch_xml BOXSCORE,
-                year: year,
-                month: month,
-                day: day,
-                gid: gid
+      fetch_xml BOXSCORE, year: year, month: month, day: day, gid: gid
     rescue
       nil
     end
@@ -142,47 +117,37 @@ module MLBGameday
     def gamecenter_xml(gid)
       year, month, day, _ = gid.split '_'
 
-      fetch_xml GAMECENTER,
-                year: year,
-                month: month,
-                day: day,
-                gid: gid
+      fetch_xml GAMECENTER, year: year, month: month, day: day, gid: gid
     rescue
       nil
     end
 
     def batter_xml(id, year: nil)
-      year ||= Date.today.year
-
       # We only really want one piece of data from this file...
-      year_data = fetch_xml BATTER,
-                            id: id,
-                            year: year
+      year_data = fetch_xml BATTER, id: id, year: (year || Date.today.year)
 
       gid = year_data.xpath('//batting/@game_id').text
       year, month, day, _ = gid.split '/'
 
-      fetch_xml "/year_#{ year }/month_#{ month }/day_#{ day }/gid_#{ gid.gsub(/[^a-z0-9]/, "_") }/batters/#{ id }.xml"
+      fetch_xml "/year_#{year}/month_#{month}/day_#{day}/" \
+                "gid_#{gid.gsub(/[^a-z0-9]/, '_')}/batters/#{id}"
     end
 
     def pitcher_xml(id, year: nil)
-      year ||= Date.today.year
-
       # We only really want one piece of data from this file...
-      year_data = fetch_xml PITCHER,
-                            id: id,
-                            year: year
+      year_data = fetch_xml PITCHER, id: id, year: (year || Date.today.year)
 
       gid = year_data.xpath('//pitching/@game_id').text
       year, month, day, _ = gid.split '/'
 
-      fetch_xml "/year_#{ year }/month_#{ month }/day_#{ day }/gid_#{ gid.gsub(/[^a-z0-9]/, "_") }/pitchers/#{ id }.xml"
+      fetch_xml "/year_#{year}/month_#{month}/day_#{day}/" \
+                "gid_#{gid.gsub(/[^a-z0-9]/, '_')}/pitchers/#{id}"
     end
 
     protected
 
     def fetch_xml(path, interpolations = {})
-      Nokogiri::XML open format(API_URL + path, interpolations)
+      Nokogiri::XML open format(API_URL + path + '.xml', interpolations)
     end
   end
 end

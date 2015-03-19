@@ -8,7 +8,7 @@ module MLBGameday
     end
 
     def division(name)
-      raise 'Invalid division' unless %i(East Central West).include?(name)
+      fail 'Invalid division' unless %i(East Central West).include?(name)
 
       @divisions[name]
     end
