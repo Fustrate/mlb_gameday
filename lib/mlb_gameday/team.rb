@@ -1,8 +1,9 @@
 module MLBGameday
   class Team
-    attr_reader :name, :city, :league, :division, :names, :code, :file_code
+    attr_reader :id, :name, :city, :league, :division, :names, :code, :file_code
 
     def initialize(opts = {})
+      @id        = opts[:id]
       @name      = opts[:name]
       @city      = opts[:city]
       @league    = opts[:league]

@@ -5,6 +5,7 @@
     :East: &aleast !ruby/object:MLBGameday::Division
       name: East
       league: *al
+      id: 201
       teams:
         :BAL: !ruby/object:MLBGameday::Team
           name: Orioles
@@ -13,6 +14,7 @@
           division: *aleast
           code: BAL
           file_code: bal
+          id: 110
           names:
           - bal
           - orioles
@@ -25,6 +27,7 @@
           division: *aleast
           code: BOS
           file_code: bos
+          id: 111
           names:
           - bos
           - red sox
@@ -38,6 +41,7 @@
           division: *aleast
           code: NYY
           file_code: nyy
+          id: 147
           names:
           - nyy
           - yankees
@@ -51,6 +55,7 @@
           division: *aleast
           code: TB
           file_code: tb
+          id: 139
           names:
           - tb
           - rays
@@ -66,6 +71,7 @@
           division: *aleast
           code: TOR
           file_code: tor
+          id: 141
           names:
           - tor
           - blue jays
@@ -78,6 +84,7 @@
     :Central: &alcentral !ruby/object:MLBGameday::Division
       name: Central
       league: *al
+      id: 202
       teams:
         :CLE: !ruby/object:MLBGameday::Team
           name: Indians
@@ -86,6 +93,7 @@
           division: *alcentral
           code: CLE
           file_code: cle
+          id: 114
           names:
           - cle
           - indians
@@ -98,6 +106,7 @@
           division: *alcentral
           code: CWS
           file_code: cws
+          id: 145
           names:
           - cws
           - white sox
@@ -109,6 +118,7 @@
           division: *alcentral
           code: DET
           file_code: det
+          id: 116
           names:
           - det
           - tigers
@@ -121,6 +131,7 @@
           division: *alcentral
           code: KC
           file_code: kc
+          id: 118
           names:
           - kc
           - royals
@@ -134,6 +145,7 @@
           division: *alcentral
           code: MIN
           file_code: min
+          id: 142
           names:
           - min
           - twins
@@ -142,6 +154,7 @@
     :West: &alwest !ruby/object:MLBGameday::Division
       name: West
       league: *al
+      id: 200
       teams:
         :LAA: !ruby/object:MLBGameday::Team
           name: Angels
@@ -150,6 +163,7 @@
           division: *alwest
           code: LAA
           file_code: ana
+          id: 108
           names:
           - ana
           - angels
@@ -170,6 +184,7 @@
           division: *alwest
           code: HOU
           file_code: hou
+          id: 117
           names:
           - hou
           - astros
@@ -182,6 +197,7 @@
           division: *alwest
           code: OAK
           file_code: oak
+          id: 133
           names:
           - oak
           - athletics
@@ -195,6 +211,7 @@
           division: *alwest
           code: SEA
           file_code: sea
+          id: 136
           names:
           - sea
           - mariners
@@ -207,6 +224,7 @@
           division: *alwest
           code: TEX
           file_code: tex
+          id: 140
           names:
           - tex
           - rangers
@@ -218,6 +236,7 @@
     :East: &nleast !ruby/object:MLBGameday::Division
       name: East
       league: *nl
+      id: 204
       teams:
         :ATL: !ruby/object:MLBGameday::Team
           name: Braves
@@ -226,6 +245,7 @@
           division: *nleast
           code: ATL
           file_code: atl
+          id: 144
           names:
           - atl
           - braves
@@ -238,6 +258,7 @@
           division: *nleast
           code: MIA
           file_code: mia
+          id: 146
           names:
           - mia
           - marlins
@@ -251,6 +272,7 @@
           division: *nleast
           code: NYM
           file_code: nym
+          id: 121
           names:
           - nym
           - mets
@@ -264,6 +286,7 @@
           division: *nleast
           code: PHI
           file_code: phi
+          id: 143
           names:
           - phi
           - phillies
@@ -277,6 +300,7 @@
           division: *nleast
           code: WSH
           file_code: wsh
+          id: 120
           names:
           - wsh
           - nationals
@@ -286,6 +310,7 @@
     :Central: &nlcentral !ruby/object:MLBGameday::Division
       name: Central
       league: *nl
+      id: 205
       teams:
         :CHC: !ruby/object:MLBGameday::Team
           name: Cubs
@@ -294,6 +319,7 @@
           division: *nlcentral
           code: CHC
           file_code: chc
+          id: 112
           names:
           - chc
           - cubs
@@ -307,6 +333,7 @@
           division: *nlcentral
           code: CIN
           file_code: cin
+          id: 113
           names:
           - cin
           - reds
@@ -319,6 +346,7 @@
           division: *nlcentral
           code: MIL
           file_code: mil
+          id: 158
           names:
           - mil
           - brewers
@@ -331,6 +359,7 @@
           division: *nlcentral
           code: PIT
           file_code: pit
+          id: 134
           names:
           - pit
           - pirates
@@ -345,6 +374,7 @@
           division: *nlcentral
           code: STL
           file_code: stl
+          id: 138
           names:
           - stl
           - cardinals
@@ -354,6 +384,7 @@
     :West: &nlwest !ruby/object:MLBGameday::Division
       name: West
       league: *nl
+      id: 203
       teams:
         :ARI: !ruby/object:MLBGameday::Team
           name: Diamondbacks
@@ -362,6 +393,7 @@
           division: *nlwest
           code: ARI
           file_code: ari
+          id: 109
           names:
           - ari
           - diamondbacks
@@ -377,6 +409,7 @@
           division: *nlwest
           code: COL
           file_code: col
+          id: 115
           names:
           - col
           - rockies
@@ -389,6 +422,7 @@
           division: *nlwest
           code: LAD
           file_code: la
+          id: 119
           names:
           - lad
           - dodgers
@@ -406,6 +440,7 @@
           division: *nlwest
           code: SD
           file_code: sd
+          id: 135
           names:
           - sd
           - padres
@@ -418,6 +453,7 @@
           division: *nlwest
           code: SF
           file_code: sf
+          id: 137
           names:
           - sf
           - giants
