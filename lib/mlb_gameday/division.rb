@@ -1,6 +1,6 @@
 module MLBGameday
   class Division
-    attr_reader :league, :name, :teams
+    attr_reader :id, :league, :name, :teams
 
     def initialize(id:, league:, name:, teams:)
       @id = id
