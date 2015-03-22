@@ -83,6 +83,14 @@ module MLBGameday
       status == 'In Progress'
     end
 
+    def started?
+      over? || in_progress?
+    end
+
+    def postponed?
+      status == 'Postponed'
+    end
+
     def home_record
       [@linescore.xpath('//game/@home_win'),
        @linescore.xpath('//game/@home_loss')].map(&:text).map(&:to_i)
