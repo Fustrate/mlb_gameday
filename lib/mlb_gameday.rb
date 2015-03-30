@@ -1,7 +1,7 @@
 require 'httparty'
 require 'nokogiri'
 require 'open-uri'
-require 'yaml'
+require 'psych'
 
 %w(version league division team game player pitcher batter).each do |file|
   require "mlb_gameday/#{file}"
@@ -21,7 +21,7 @@ module MLBGameday
     attr_reader :leagues
 
     def initialize
-      @leagues = YAML.load File.open File.join(
+      @leagues = Psych.load File.open File.join(
         File.dirname(File.expand_path __FILE__), '../resources/data.yml'
       )
     end
