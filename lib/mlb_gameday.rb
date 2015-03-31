@@ -2,6 +2,7 @@ require 'httparty'
 require 'nokogiri'
 require 'open-uri'
 require 'psych'
+require 'chronic'
 
 %w(version league division team game player pitcher batter).each do |file|
   require "mlb_gameday/#{file}"
