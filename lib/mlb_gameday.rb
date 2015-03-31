@@ -55,16 +55,16 @@ module MLBGameday
                      @leagues[:NL].divisions.values
     end
 
-    def pitcher(id)
-      return nil if id.empty?
+    def pitcher(id, year: nil)
+      return if id.empty?
 
-      MLBGameday::Pitcher.new id: id, xml: pitcher_xml(id)
+      MLBGameday::Pitcher.new id: id, xml: pitcher_xml(id, year: year)
     end
 
-    def batter(id)
-      return nil if id.empty?
+    def batter(id, year: nil)
+      return if id.empty?
 
-      MLBGameday::Batter.new id: id, xml: batter_xml(id)
+      MLBGameday::Batter.new id: id, xml: batter_xml(id, year: year)
     end
 
     def game(gid)

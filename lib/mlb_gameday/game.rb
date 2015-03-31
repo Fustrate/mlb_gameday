@@ -104,31 +104,36 @@ module MLBGameday
     def current_pitcher
       return nil unless in_progress?
 
-      @api.pitcher @linescore.xpath('//game/current_pitcher/@id').text
+      @api.pitcher @linescore.xpath('//game/current_pitcher/@id').text,
+                   year: date.year
     end
 
     def opposing_pitcher
       return nil unless in_progress?
 
-      @api.pitcher @linescore.xpath('//game/opposing_pitcher/@id').text
+      @api.pitcher @linescore.xpath('//game/opposing_pitcher/@id').text,
+                   year: date.year
     end
 
     def winning_pitcher
       return nil unless over?
 
-      @api.pitcher @linescore.xpath('//game/winning_pitcher/@id').text
+      @api.pitcher @linescore.xpath('//game/winning_pitcher/@id').text,
+                   year: date.year
     end
 
     def losing_pitcher
       return nil unless over?
 
-      @api.pitcher @linescore.xpath('//game/losing_pitcher/@id').text
+      @api.pitcher @linescore.xpath('//game/losing_pitcher/@id').text,
+                   year: date.year
     end
 
     def save_pitcher
       return nil unless over?
 
-      @api.pitcher @linescore.xpath('//game/save_pitcher/@id').text
+      @api.pitcher @linescore.xpath('//game/save_pitcher/@id').text,
+                   year: date.year
     end
 
     def away_starting_pitcher
