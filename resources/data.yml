@@ -299,7 +299,7 @@
           league: *nl
           division: *nleast
           code: WSH
-          file_code: wsh
+          file_code: was
           id: 120
           names:
           - wsh
