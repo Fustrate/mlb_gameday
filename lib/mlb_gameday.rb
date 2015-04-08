@@ -1,7 +1,8 @@
 require 'httparty'
 require 'nokogiri'
 require 'open-uri'
-require 'yaml'
+require 'psych'
+require 'chronic'
 
 %w(version league division team game player pitcher batter).each do |file|
   require "mlb_gameday/#{file}"
@@ -21,7 +22,7 @@ module MLBGameday
     attr_reader :leagues
 
     def initialize
-      @leagues = YAML.load File.open File.join(
+      @leagues = Psych.load File.open File.join(
         File.dirname(File.expand_path __FILE__), '../resources/data.yml'
       )
     end
@@ -55,16 +56,16 @@ module MLBGameday
                      @leagues[:NL].divisions.values
     end
 
-    def pitcher(id)
-      return nil if id.empty?
+    def pitcher(id, year: nil)
+      return if id.empty?
 
-      MLBGameday::Pitcher.new id: id, xml: pitcher_xml(id)
+      MLBGameday::Pitcher.new id: id, xml: pitcher_xml(id, year: year)
     end
 
-    def batter(id)
-      return nil if id.empty?
+    def batter(id, year: nil)
+      return if id.empty?
 
-      MLBGameday::Batter.new id: id, xml: batter_xml(id)
+      MLBGameday::Batter.new id: id, xml: batter_xml(id, year: year)
     end
 
     def game(gid)

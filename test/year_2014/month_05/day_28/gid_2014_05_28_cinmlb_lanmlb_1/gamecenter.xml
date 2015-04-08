@@ -1,0 +1,115 @@
+<game status="F" id="2014_05_28_cinmlb_lanmlb_1" start_time="10:10" ampm="pm" time_zone="ET"  type="R" away_score="3" home_score="2" league="NL" series-code="" series-game-number="3" game-number="1">
+    <ticketlink></ticketlink>
+    <venueShort>Dodger Stadium</venueShort>
+	<venueLong>Dodger Stadium</venueLong>
+	<gallery exists="1" />
+    <broadcast>
+        <home>
+        <tv>SportsNet LA, SNLA Spanish</tv>
+        <radio>570 Fox Sports L.A. , KTNQ 1020</radio>
+</home>
+        <away>
+        <tv>FS-O</tv>
+        <radio>WLW 700, Reds Radio Network</radio>
+</away>
+    </broadcast>
+    <probables>
+	    
+	<home>
+		<player_id>477132</player_id>
+		<useName>Clayton</useName>
+		<lastName>Kershaw</lastName>
+		<rosterDisplayName>Kershaw</rosterDisplayName> 
+        <number>22</number>
+		<throwinghand>LHP</throwinghand>
+		<wins>3</wins>
+		<losses>1</losses>
+		<era>3.49</era>
+		<so>37</so>
+		<std_wins>3</std_wins>
+		<std_losses>1</std_losses>
+		<std_era>3.49</std_era>
+		<std_so>37</std_so>
+		<report><![CDATA[Despite a 43 minute rain delay Kershaw shook off a bad outing five days prior to throw six shutout innings against the Phillies in a 2-0 win. Kershaw worked out of a pair of jams both of which came after the delay.]]></report>
+	    <relatedvideo><media content_id="28998889"><title>Kershaw&#39;s RBI groundout</title></media></relatedvideo>
+
+	</home>
+
+        
+	<away>
+		<player_id>456701</player_id>
+		<useName>Homer</useName>
+		<lastName>Bailey</lastName>
+		<rosterDisplayName>Bailey, H</rosterDisplayName> 
+        <number>34</number>
+		<throwinghand>RHP</throwinghand>
+		<wins>4</wins>
+		<losses>3</losses>
+		<era>5.34</era>
+		<so>50</so>
+		<std_wins>4</std_wins>
+		<std_losses>3</std_losses>
+		<std_era>5.34</std_era>
+		<std_so>50</std_so>
+		<report><![CDATA[Bailey wasn't at his sharpest against the Cardinals on May 23, giving up three runs on eight singles in six innings, but he got the win as the Reds prevailed, 5-3. In eight career starts against the Dodgers, the right-hander is 3-3 with a 4.01 ERA.]]></report>
+	    <relatedvideo><media content_id="29018875"><title>Bailey on career-high 12 K&#39;s</title></media></relatedvideo>
+
+	</away>
+	
+	</probables>
+    <previews>
+        <mlb><headline><![CDATA[No rest for Reds as Dodgers call on Kershaw]]></headline><blurb><![CDATA[The Reds were nearly the victims of a perfect game by Hyun-Jin Ryu on Monday, then they faced 7-1 right-hander Zack Greinke on Tuesday. On Wednesday, Homer Bailey and the Reds draw two-time NL Cy Young Award winner Clayton Kershaw.]]></blurb><url cid="2014052777060122"><![CDATA[/mlb/gameday/index.jsp?gid=2014_05_28_cinmlb_lanmlb_1&mode=preview&c_id=mlb]]></url>
+</mlb>
+        <home><headline><![CDATA[No rest for Reds as Dodgers call on Kershaw]]></headline><blurb><![CDATA[The Reds were nearly the victims of a perfect game by Hyun-Jin Ryu on Monday, then they faced 7-1 right-hander Zack Greinke on Tuesday. On Wednesday, Homer Bailey and the Reds draw two-time NL Cy Young Award winner Clayton Kershaw.]]></blurb><url cid="2014052777060122"><![CDATA[/mlb/gameday/index.jsp?gid=2014_05_28_cinmlb_lanmlb_1&mode=preview&c_id=mlb]]></url>
+</home>
+        <away><headline><![CDATA[No rest for Reds as Dodgers call on Kershaw]]></headline><blurb><![CDATA[The Reds were nearly the victims of a perfect game by Hyun-Jin Ryu on Monday, then they faced 7-1 right-hander Zack Greinke on Tuesday. On Wednesday, Homer Bailey and the Reds draw two-time NL Cy Young Award winner Clayton Kershaw.]]></blurb><url cid="2014052777060122"><![CDATA[/mlb/gameday/index.jsp?gid=2014_05_28_cinmlb_lanmlb_1&mode=preview&c_id=mlb]]></url>
+</away>
+    </previews>
+    <recaps>
+        <home><headline><![CDATA[Kershaw gets stung by Reds' fast start]]></headline><blurb><![CDATA[Clayton Kershaw struck on nine in seven innings, but the Dodgers managed little more than a Yasiel Puig homer against right-hander Homer Bailey in a 3-2 loss to the Reds in Wednesday's series finale at Dodger Stadium.]]></blurb><url cid="2014052977244478"><![CDATA[/mlb/gameday/index.jsp?gid=2014_05_28_cinmlb_lanmlb_1&mode=recap&c_id=la]]></url>
+</home>    
+        <away><headline><![CDATA[Phillips' homer helps Bailey outduel Kershaw]]></headline><blurb><![CDATA[Brandon Phillips' first-inning homer gave the Reds their first lead in five games, and Homer Bailey held onto it in Wednesday night's series finale against Clayton Kershaw and the Dodgers in Los Angeles.]]></blurb><url cid="2014052977243462"><![CDATA[/mlb/gameday/index.jsp?gid=2014_05_28_cinmlb_lanmlb_1&mode=recap&c_id=cin]]></url>
+</away>    
+    </recaps>
+    <wrap>
+        <mlb><headline><![CDATA[Homer pens a happy ending in Hollywood]]></headline><blurb><![CDATA[Brandon Phillips' first-inning homer gave the Reds their first lead in five games, and Homer Bailey didn't let it go. The right-hander outdueled Dodgers ace Clayton Kershaw for seven innings in the series finale as Cincinnati ended its four-game skid in Los Angeles.]]></blurb><url cid="2014052977311672"><![CDATA[/mlb/gameday/index.jsp?gid=2014_05_28_cinmlb_lanmlb_1&mode=wrap&c_id=mlb]]></url><video_index>
+<item mediaType="video">
+  <meta content_id="33264035" link_type="vpp" topic_id="" calendar_event_id="" view_key="" duration="00:02:10"/>
+  <headline><![CDATA[Bailey's strong start]]></headline>
+  <blurb><![CDATA[CIN@LAD: Bailey tosses seven innings of two-run ball]]></blurb>
+  <big_blurb><![CDATA[5/28/14: Homer Bailey pitches seven strong innings, allowing two runs on five hits while striking out six batters]]></big_blurb>
+  <thumb>http://mediadownloads.mlb.com/mlbam/2014/05/29/images/mlbf_33264035_th_7.jpg</thumb>
+  <keywords/>
+</item>
+</video_index>
+</mlb>    
+    </wrap>
+        <photos>
+        
+
+<ipad>
+    <url>/assets/images/1/1/0/77312110/cuts/Homer_Bailey_spzhqcru_xq76bdsx.jpg</url>
+    <url_retina>/assets/images/1/1/0/77312110/cuts/Homer_Bailey_spzhqcru_xq76bdsx@2x.jpg</url_retina>
+    <url_ps>/assets/images/1/1/0/77312110/cuts/Homer_Bailey_spzhqcru_v5y2ik4u.jpg</url_ps>
+    <url_ps_retina>/assets/images/1/1/0/77312110/cuts/Homer_Bailey_spzhqcru_v5y2ik4u@2x.jpg</url_ps_retina>
+    <headline><![CDATA[]]></headline>
+    <caption><![CDATA[Homer pens a happy ending in Hollywood]]></caption>
+    <credit><![CDATA[]]></credit>
+</ipad>
+    
+    </photos>
+    <ipad_video>
+<media pid="mlb_tp" type="video" free="T" feed-code="mlb_tp" dds-id="" date="" state="" game-id="" blackout="local">
+  <title><![CDATA[Bailey's strong start]]></title>
+  <duration>00:02:10</duration>
+  <meta content_id="33264035" link_type="vpp" topic_id="" calendar_event_id="" view_key="" duration="00:02:10"/>
+  <url speed="300" fid="mlb_tp300" w_id="" id="" authorization="N" login="N" type="flash_video" gid="" pid="mlb_tp" spons="" vid="" c_url="" mid="2014052933264035" v="" state="">http://mediadownloads.mlb.com/mlbam/2014/05/29/mlbtv_cinlan_33264035_300K.mp4</url>
+  <url speed="600" fid="mlb_tp600" w_id="" id="" authorization="N" login="N" type="flash_video" gid="" pid="mlb_tp" spons="" vid="" c_url="" mid="2014052933264035" v="" state="">http://mediadownloads.mlb.com/mlbam/2014/05/29/mlbtv_cinlan_33264035_600K.mp4</url>
+  <url speed="1200" fid="mlb_tp1200" w_id="" id="" authorization="N" login="N" type="flash_video" gid="" pid="mlb_tp" spons="" vid="" c_url="" mid="2014052933264035" v="" state="">http://mediadownloads.mlb.com/mlbam/2014/05/29/mlbtv_cinlan_33264035_1200K.mp4</url>
+  <url speed="1800" fid="mlb_tp1800" w_id="" id="" authorization="N" login="N" type="flash_video" gid="" pid="mlb_tp" spons="" vid="" c_url="" mid="2014052933264035" v="" state="">http://mediadownloads.mlb.com/mlbam/2014/05/29/mlbtv_cinlan_33264035_1800K.mp4</url>
+  <url speed="101" fid="mlb_tp101" w_id="" id="" authorization="N" login="N" type="flash_video" gid="" pid="mlb_tp" spons="" vid="" c_url="" mid="2014052933264035" v="" state="">http://mediadownloads.mlb.com/mlbam/2014/05/29/33264035_m3u8/master_mobile.m3u8</url>
+  <url speed="102" fid="mlb_tp102" w_id="" id="" authorization="N" login="N" type="flash_video" gid="" pid="mlb_tp" spons="" vid="" c_url="" mid="2014052933264035" v="" state="">http://mediadownloads.mlb.com/mlbam/2014/05/29/33264035_m3u8/master_tablet.m3u8</url>
+  <url speed="" fid="mlb_tp" w_id="" id="" authorization="N" login="N" type="flash_video" gid="" pid="mlb_tp" spons="" vid="" c_url="" mid="2014052933264035" v="" state="">http://mediadownloads.mlb.com/mlbam/2014/05/29/33264035_m3u8/master_android_tablet.m3u8</url>
+  <thumbnail>http://mediadownloads.mlb.com/mlbam/2014/05/29/images/mlbf_33264035_th_7.jpg</thumbnail>
+</media>
+</ipad_video></game>
