@@ -70,4 +70,12 @@ class TestApi < MiniTest::Test
         refute_includes team.names, team.city.downcase
     end
   end
+  
+  def test_no_teams_share_any_names
+    @api.teams.each do |team|
+      @api.teams.select {|t| t != team}.each do |other_team|
+        assert_equal (team.names - other_team.names), team.names
+      end
+    end
+  end
 end
