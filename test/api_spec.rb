@@ -38,4 +38,20 @@ class TestApi < MiniTest::Test
     assert_equal @api.team('Astros').league.name, 'American'
     assert_equal @api.team('Astros').division.name, 'West'
   end
+
+  def test_names_includes_code
+    assert_includes @api.team('Oakland').names, 'oak'
+  end
+
+  def test_names_includes_name
+    assert_includes @api.team('Oakland').names, 'athletics'
+  end
+
+  def test_names_includes_alt_names
+    assert_includes @api.team('Oakland').names, 'as'
+  end
+
+  def test_names_includes_city_except_nyc_and_chicago
+    assert_includes @api.team('Athletics').names, 'oakland'
+  end
 end
