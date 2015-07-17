@@ -40,18 +40,26 @@ class TestApi < MiniTest::Test
   end
 
   def test_names_includes_code
-    assert_includes @api.team('Oakland').names, 'oak'
+    @api.teams.each do |team|
+      assert_includes team.names, team.code.downcase
+    end
   end
 
   def test_names_includes_name
-    assert_includes @api.team('Oakland').names, 'athletics'
-  end
-
-  def test_names_includes_alt_names
-    assert_includes @api.team('Oakland').names, 'as'
+    @api.teams.each do |team|
+      assert_includes team.names, team.name.downcase
+    end
   end
 
   def test_names_includes_city_except_nyc_and_chicago
-    assert_includes @api.team('Athletics').names, 'oakland'
+    @api.teams.reject {|team| ["New York", "Chicago"].include?(team.city)}.each do |team|
+        assert_includes team.names, team.city.downcase
+    end
+  end
+
+  def test_names_does_not_include_city_for_nyc_and_chicago
+    @api.teams.select {|team| ["New York", "Chicago"].include?(team.city)}.each do |team|
+        refute_includes team.names, team.city.downcase
+    end
   end
 end
