@@ -24,7 +24,6 @@
           file_code: bos
           id: 111
           alt_names:
-          - redsox
           - bosox
         :NYY: !ruby/object:MLBGameday::Team
           name: Yankees
@@ -57,7 +56,6 @@
           file_code: tor
           id: 141
           alt_names:
-          - bluejays
           - bluejay
           - jays
           - jay

@@ -68,6 +68,12 @@ class TestApi < MiniTest::Test
       assert_includes team.names, team.send(:singular_name).downcase
     end
   end
+  
+  def test_names_includes_despaced_name_when_name_is_multi_word
+    @api.teams.select {|team| team.name.split.size > 1}.each do |team|
+        assert_includes team.names, team.send(:despaced_name).downcase
+    end
+  end
 
   def test_names_includes_city_except_nyc_and_chicago
     @api.teams.reject {|team| ["New York", "Chicago"].include?(team.city)}.each do |team|

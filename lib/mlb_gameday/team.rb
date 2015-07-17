@@ -36,11 +36,10 @@ module MLBGameday
     end
     
     def implicit_names
-      result = strict_names << code.downcase
-      result << singular_name.downcase if is_plural?
+      result = strict_names + [code, singular_name, despaced_name].map(&:downcase)
       result << city.downcase unless ["New York", "Chicago"].include?(city)
       
-      result
+      result.uniq
     end
     
     def strict_names
@@ -51,8 +50,8 @@ module MLBGameday
       name.chomp('s')
     end
     
-    def is_plural?
-      singular_name != name
+    def despaced_name
+      name.tr(' ', '')
     end
   end
 end
