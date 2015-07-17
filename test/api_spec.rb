@@ -62,6 +62,12 @@ class TestApi < MiniTest::Test
       end
     end
   end
+  
+  def test_names_include_singular_name_when_different_from_name
+    @api.teams.reject {|team| team.name == team.send(:singular_name)}.each do |team|
+      assert_includes team.names, team.send(:singular_name).downcase
+    end
+  end
 
   def test_names_includes_city_except_nyc_and_chicago
     @api.teams.reject {|team| ["New York", "Chicago"].include?(team.city)}.each do |team|
