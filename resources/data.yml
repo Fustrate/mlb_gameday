@@ -15,7 +15,6 @@
           code: BAL
           file_code: bal
           id: 110
-          alt_names:
         :BOS: !ruby/object:MLBGameday::Team
           name: Red Sox
           city: Boston
@@ -75,7 +74,6 @@
           code: CLE
           file_code: cle
           id: 114
-          alt_names:
         :CWS: !ruby/object:MLBGameday::Team
           name: White Sox
           city: Chicago
@@ -84,7 +82,6 @@
           code: CWS
           file_code: cws
           id: 145
-          alt_names:
         :DET: !ruby/object:MLBGameday::Team
           name: Tigers
           city: Detroit
@@ -93,7 +90,6 @@
           code: DET
           file_code: det
           id: 116
-          alt_names:
         :KC: !ruby/object:MLBGameday::Team
           name: Royals
           city: Kansas City
@@ -112,7 +108,6 @@
           code: MIN
           file_code: min
           id: 142
-          alt_names:
     :West: &alwest !ruby/object:MLBGameday::Division
       name: West
       league: *al
@@ -142,7 +137,6 @@
           code: HOU
           file_code: hou
           id: 117
-          alt_names:
         :OAK: !ruby/object:MLBGameday::Team
           name: Athletics
           city: Oakland
@@ -161,7 +155,6 @@
           code: SEA
           file_code: sea
           id: 136
-          alt_names:
         :TEX: !ruby/object:MLBGameday::Team
           name: Rangers
           city: Texas
@@ -170,7 +163,6 @@
           code: TEX
           file_code: tex
           id: 140
-          alt_names:
 :NL: &nl !ruby/object:MLBGameday::League
   name: National
   divisions:
@@ -187,7 +179,6 @@
           code: ATL
           file_code: atl
           id: 144
-          alt_names:
         :MIA: !ruby/object:MLBGameday::Team
           name: Marlins
           city: Miami
@@ -251,7 +242,6 @@
           code: CIN
           file_code: cin
           id: 113
-          alt_names:
         :MIL: !ruby/object:MLBGameday::Team
           name: Brewers
           city: Milwaukee
@@ -260,7 +250,6 @@
           code: MIL
           file_code: mil
           id: 158
-          alt_names:
         :PIT: !ruby/object:MLBGameday::Team
           name: Pirates
           city: Pittsburgh
@@ -307,7 +296,6 @@
           code: COL
           file_code: col
           id: 115
-          alt_names:
         :LAD: !ruby/object:MLBGameday::Team
           name: Dodgers
           city: Los Angeles
@@ -330,7 +318,6 @@
           code: SD
           file_code: sd
           id: 135
-          alt_names:
         :SF: !ruby/object:MLBGameday::Team
           name: Giants
           city: San Francisco
