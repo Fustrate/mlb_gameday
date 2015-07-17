@@ -30,6 +30,10 @@ class TestApi < MiniTest::Test
     assert_equal @api.team('Dodgers').city, 'Los Angeles'
   end
 
+  def test_name_search_for_nonexistent_returns_nil
+    assert_nil @api.team('Senators')
+  end
+
   def test_division_team_count
     assert_equal @api.team('Dodgers').division.teams.count, 5
   end

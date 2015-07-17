@@ -20,6 +20,10 @@ module MLBGameday
     def names
       @names ||= (implicit_names + alt_names).uniq
     end
+    
+    def is_called?(name)
+      names.include?(name.downcase)
+    end
 
     # So we don't get huge printouts
     def inspect

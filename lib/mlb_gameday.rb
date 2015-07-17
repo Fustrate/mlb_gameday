@@ -34,13 +34,11 @@ module MLBGameday
     end
 
     def team(name)
-      return name if name.is_a? MLBGameday::Team
-
-      teams.each do |team|
-        return team if team.names.include? name.downcase
+      if name.is_a? MLBGameday::Team 
+        name
+      else
+        teams.select { |team| team.is_called?(name) }.first
       end
-
-      nil
     end
 
     def teams
