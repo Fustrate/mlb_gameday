@@ -18,7 +18,8 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+`require 'mlb_gameday' #=> true`
+`gd2 = MLBGameday::API.new`
 
 ## Contributing
 
