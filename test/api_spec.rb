@@ -1,6 +1,5 @@
 # frozen_string_literal: true
-require 'minitest/autorun'
-require 'mlb_gameday.rb'
+require './test/test_helper'
 
 class TestApi < MiniTest::Test
   def setup
