@@ -57,12 +57,14 @@ module MLBGameday
 
     # Preview, Pre-Game, In Progress, Final
     def status
+      return 'Preview' unless @linescore
+
       @status ||= @linescore.xpath('//game/@status').text
     end
 
     # [3, Top/Middle/Bottom/End]
     def inning
-      return [0, '?'] unless @linescore.xpath('//game/@inning')
+      return [0, '?'] unless @linescore && @linescore.xpath('//game/@inning')
 
       [@linescore.xpath('//game/@inning').text.to_i,
        @linescore.xpath('//game/@inning_state').text]
@@ -92,11 +94,15 @@ module MLBGameday
     end
 
     def home_record
+      return [0, 0] unless @linescore
+
       [@linescore.xpath('//game/@home_win'),
        @linescore.xpath('//game/@home_loss')].map(&:text).map(&:to_i)
     end
 
     def away_record
+      return [0, 0] unless @linescore
+
       [@linescore.xpath('//game/@away_win'),
        @linescore.xpath('//game/@away_loss')].map(&:text).map(&:to_i)
     end
@@ -137,10 +143,14 @@ module MLBGameday
     end
 
     def away_starting_pitcher
+      return '' unless @linescore
+
       @linescore.xpath('//game/away_probable_pitcher/@id').text
     end
 
     def home_starting_pitcher
+      return '' unless @linescore
+
       @linescore.xpath('//game/home_probable_pitcher/@id').text
     end
 
@@ -216,10 +226,14 @@ module MLBGameday
     end
 
     def free?
+      return false unless @linescore
+
       @linescore.xpath('//game/game_media/media/@free').text == 'ALL'
     end
 
     def date
+      return Date.today unless @linescore # SUPER KLUDGE
+
       @date ||= Chronic.parse @linescore.xpath('//game/@original_date').text
     end
 
