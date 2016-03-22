@@ -34,7 +34,7 @@ module MLBGameday
     end
 
     def team(name)
-      if name.is_a? MLBGameday::Team 
+      if name.is_a? MLBGameday::Team
         name
       else
         teams.select { |team| team.is_called?(name) }.first
@@ -147,6 +147,8 @@ module MLBGameday
 
     def fetch_xml(path, interpolations = {})
       Nokogiri::XML open format(API_URL + path + '.xml', interpolations)
+    rescue OpenURI::HTTPError
+      {}
     end
   end
 end
