@@ -60,7 +60,8 @@ module MLBGameday
                       'O' => 'Game Over',
                       'CS' => 'Cancelled',
                       'F' => 'Final',
-                      'CE' => 'Completed Early'
+                      'CE' => 'Completed Early',
+                      'P' => 'Postponed'
                     }[@gamecenter.xpath('//game/@status').text]
                   end
     end
