@@ -34,33 +34,19 @@ module MLBGameday
     end
 
     def home_start_time(ampm: true)
-      if ampm
-        [
-          @linescore.xpath('//game/@home_time').text,
-          @linescore.xpath('//game/@home_ampm').text,
-          @linescore.xpath('//game/@home_time_zone').text
-        ].join ' '
-      else
-        [
-          @linescore.xpath('//game/@home_time').text,
-          @linescore.xpath('//game/@home_time_zone').text
-        ].join ' '
-      end
+      [
+        @linescore.xpath('//game/@home_time').text,
+        (@linescore.xpath('//game/@home_ampm').text if ampm),
+        @linescore.xpath('//game/@home_time_zone').text
+      ].compact.join ' '
     end
 
     def away_start_time(ampm: true)
-      if ampm
-        [
-          @linescore.xpath('//game/@away_time').text,
-          @linescore.xpath('//game/@away_ampm').text,
-          @linescore.xpath('//game/@away_time_zone').text
-        ].join ' '
-      else
-        [
-          @linescore.xpath('//game/@away_time').text,
-          @linescore.xpath('//game/@away_time_zone').text
-        ].join ' '
-      end
+      [
+        @linescore.xpath('//game/@away_time').text,
+        (@linescore.xpath('//game/@away_ampm').text if ampm),
+        @linescore.xpath('//game/@away_time_zone').text
+      ].compact.join ' '
     end
 
     # Preview, Pre-Game, In Progress, Final
