@@ -68,9 +68,12 @@ module MLBGameday
                     @linescore.xpath('//game/@status').text
                   else
                     {
-                      'P' => 'Preview',
+                      'S' => 'Preview',
                       'I' => 'In Progress',
-                      'O' => 'Over'
+                      'O' => 'Game Over',
+                      'CS' => 'Cancelled',
+                      'F' => 'Final',
+                      'CE' => 'Completed Early'
                     }[@gamecenter.xpath('//game/@status').text]
                   end
     end
