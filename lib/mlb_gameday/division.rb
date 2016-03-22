@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module MLBGameday
   class Division
     attr_reader :id, :league, :name, :teams

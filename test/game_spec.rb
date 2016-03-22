@@ -1,9 +1,10 @@
+# frozen_string_literal: true
 require 'minitest/autorun'
 require 'mlb_gameday.rb'
 
 # Mock the basic `open` function so we don't actually hit the MLB website
 class MockedApi < MLBGameday::API
-  alias_method :old_open, :open
+  alias old_open open
 
   def open(url, &block)
     dir = File.dirname __FILE__
@@ -20,7 +21,7 @@ class MockedApi < MLBGameday::API
 
     return file unless block_given?
 
-    block.call file
+    yield file
   end
 end
 

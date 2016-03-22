@@ -1,14 +1,15 @@
+# frozen_string_literal: true
 require 'open-uri'
 require 'fileutils'
 
-fail 'Please pass a URL to this program.' if ARGV[0].empty?
+raise 'Please pass a URL to this program.' if ARGV[0].empty?
 
 def download_url(url)
   response = open(url)
 
-      puts "Downloading #{url}"
+  puts "Downloading #{url}"
 
-  fail "Error downloading #{url}" unless response.status[0] == '200'
+  raise "Error downloading #{url}" unless response.status[0] == '200'
 
   handle_file url, response.read
 end

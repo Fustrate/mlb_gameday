@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module MLBGameday
   # This class is just too long. It might be able to be split up, but it's not
   # likely to happen any time soon. For now, we'll disable the cop.
@@ -95,7 +96,7 @@ module MLBGameday
     def over?
       ['Final', 'Game Over', 'Completed Early'].include? status
     end
-    alias_method :fat_lady_has_sung?, :over?
+    alias fat_lady_has_sung? over?
 
     def in_progress?
       status == 'In Progress'

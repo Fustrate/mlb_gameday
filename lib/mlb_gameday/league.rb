@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module MLBGameday
   class League
     attr_reader :name, :divisions
@@ -8,7 +9,7 @@ module MLBGameday
     end
 
     def division(name)
-      fail 'Invalid division' unless %i(East Central West).include?(name)
+      raise 'Invalid division' unless %i(East Central West).include?(name)
 
       @divisions[name]
     end

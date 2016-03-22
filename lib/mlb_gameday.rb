@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'httparty'
 require 'nokogiri'
 require 'open-uri'
@@ -23,7 +24,7 @@ module MLBGameday
 
     def initialize
       @leagues = Psych.load File.open File.join(
-        File.dirname(File.expand_path __FILE__), '../resources/data.yml'
+        File.dirname(File.expand_path(__FILE__)), '../resources/data.yml'
       )
     end
 
@@ -37,7 +38,7 @@ module MLBGameday
       if name.is_a? MLBGameday::Team
         name
       else
-        teams.select { |team| team.is_called?(name) }.first
+        teams.find { |team| team.is_called?(name) }
       end
     end
 
@@ -100,13 +101,13 @@ module MLBGameday
     end
 
     def linescore_xml(gid)
-      year, month, day, _ = gid.split '_'
+      year, month, day, = gid.split '_'
 
       fetch_xml LINESCORE, year: year, month: month, day: day, gid: gid
     end
 
     def boxscore_xml(gid)
-      year, month, day, _ = gid.split '_'
+      year, month, day, = gid.split '_'
 
       fetch_xml BOXSCORE, year: year, month: month, day: day, gid: gid
     rescue
@@ -114,7 +115,7 @@ module MLBGameday
     end
 
     def gamecenter_xml(gid)
-      year, month, day, _ = gid.split '_'
+      year, month, day, = gid.split '_'
 
       fetch_xml GAMECENTER, year: year, month: month, day: day, gid: gid
     rescue
@@ -126,7 +127,7 @@ module MLBGameday
       year_data = fetch_xml BATTER, id: id, year: (year || Date.today.year)
 
       gid = year_data.xpath('//batting/@game_id').text
-      year, month, day, _ = gid.split '/'
+      year, month, day, = gid.split '/'
 
       fetch_xml "/year_#{year}/month_#{month}/day_#{day}/" \
                 "gid_#{gid.gsub(/[^a-z0-9]/, '_')}/batters/#{id}"
@@ -137,7 +138,7 @@ module MLBGameday
       year_data = fetch_xml PITCHER, id: id, year: (year || Date.today.year)
 
       gid = year_data.xpath('//pitching/@game_id').text
-      year, month, day, _ = gid.split '/'
+      year, month, day, = gid.split '/'
 
       fetch_xml "/year_#{year}/month_#{month}/day_#{day}/" \
                 "gid_#{gid.gsub(/[^a-z0-9]/, '_')}/pitchers/#{id}"
