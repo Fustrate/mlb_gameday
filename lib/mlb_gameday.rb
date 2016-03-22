@@ -148,7 +148,7 @@ module MLBGameday
     def fetch_xml(path, interpolations = {})
       Nokogiri::XML open format(API_URL + path + '.xml', interpolations)
     rescue OpenURI::HTTPError
-      {}
+      false
     end
   end
 end
