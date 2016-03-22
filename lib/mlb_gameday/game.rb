@@ -64,9 +64,15 @@ module MLBGameday
 
     # Preview, Pre-Game, In Progress, Final
     def status
-      return 'Preview' unless @linescore
-
-      @status ||= @linescore.xpath('//game/@status').text
+      @status ||= if @linescore
+                    @linescore.xpath('//game/@status').text
+                  else
+                    {
+                      'P' => 'Preview',
+                      'I' => 'In Progress',
+                      'O' => 'Over'
+                    }[@gamecenter.xpath('//game/@status').text]
+                  end
     end
 
     # [3, Top/Middle/Bottom/End]
