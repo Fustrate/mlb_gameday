@@ -15,6 +15,7 @@
           code: BAL
           file_code: bal
           id: 110
+          alt_names: [balmlb]
         :BOS: !ruby/object:MLBGameday::Team
           name: Red Sox
           city: Boston
@@ -23,8 +24,7 @@
           code: BOS
           file_code: bos
           id: 111
-          alt_names:
-          - bosox
+          alt_names: [bosox, bosmlb]
         :NYY: !ruby/object:MLBGameday::Team
           name: Yankees
           city: New York
@@ -35,6 +35,7 @@
           id: 147
           alt_names:
           - new york yankee
+          - nyamlb
         :TB: !ruby/object:MLBGameday::Team
           name: Rays
           city: Tampa Bay
@@ -47,6 +48,7 @@
           - devil rays
           - devil ray
           - tampa
+          - tbamlb
         :TOR: !ruby/object:MLBGameday::Team
           name: Blue Jays
           city: Toronto
@@ -59,6 +61,7 @@
           - bluejay
           - jays
           - jay
+          - tormlb
     :Central: &alcentral !ruby/object:MLBGameday::Division
       name: Central
       league: *al

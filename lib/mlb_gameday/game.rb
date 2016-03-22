@@ -13,8 +13,13 @@ module MLBGameday
       @gamecenter = gamecenter
       @boxscore   = boxscore
 
-      @home_team = @api.team linescore.xpath('//game/@home_name_abbrev').text
-      @away_team = @api.team linescore.xpath('//game/@away_name_abbrev').text
+      if linescore
+        @home_team = @api.team linescore.xpath('//game/@home_name_abbrev').text
+        @away_team = @api.team linescore.xpath('//game/@away_name_abbrev').text
+      else
+        @home_team = @api.team gamecenter.xpath('//game/@id').text[18, 6]
+        @away_team = @api.team gamecenter.xpath('//game/@id').text[11, 6]
+      end
     end
 
     def teams
@@ -22,7 +27,9 @@ module MLBGameday
     end
 
     def venue
-      @linescore.xpath('//game/@venue').text
+      return @linescore.xpath('//game/@venue').text if @linescore
+
+      @gamecenter.xpath('//game/venueShort').text
     end
 
     def home_start_time(ampm: true)
