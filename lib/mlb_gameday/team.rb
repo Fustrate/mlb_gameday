@@ -42,7 +42,7 @@ module MLBGameday
       result << [code, singular_name, despaced_name].map(&:downcase)
       result << city.downcase unless ['New York', 'Chicago'].include?(city)
 
-      result.uniq
+      result.flatten.uniq
     end
 
     def strict_names
