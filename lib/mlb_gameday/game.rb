@@ -14,13 +14,16 @@ module MLBGameday
       @gamecenter = gamecenter
       @boxscore   = boxscore
 
-      if linescore
-        @home_team = @api.team linescore.xpath('//game/@home_name_abbrev').text
-        @away_team = @api.team linescore.xpath('//game/@away_name_abbrev').text
+      if @linescore
+        @home_team = @api.team home_name_abbrev
+        @away_team = @api.team away_name_abbrev
       else
         @home_team = @api.team gamecenter.xpath('//game/@id').text[18, 6]
         @away_team = @api.team gamecenter.xpath('//game/@id').text[11, 6]
       end
+
+      # Preview, Pre-Game, In Progress, Final
+      @status ||= status
     end
 
     def teams
@@ -35,17 +38,17 @@ module MLBGameday
 
     def home_start_time(ampm: true)
       [
-        @linescore.xpath('//game/@home_time').text,
-        (@linescore.xpath('//game/@home_ampm').text if ampm),
-        @linescore.xpath('//game/@home_time_zone').text
+        home_time,
+        (home_ampm if ampm),
+        home_time_zone
       ].compact.join ' '
     end
 
     def away_start_time(ampm: true)
       [
-        @linescore.xpath('//game/@away_time').text,
-        (@linescore.xpath('//game/@away_ampm').text if ampm),
-        @linescore.xpath('//game/@away_time_zone').text
+        away_time,
+        (away_ampm if ampm),
+        away_time_zone
       ].compact.join ' '
     end
 
@@ -68,10 +71,9 @@ module MLBGameday
 
     # [3, Top/Middle/Bottom/End]
     def inning
-      return [0, '?'] unless @linescore && @linescore.xpath('//game/@inning')
+      return [0, '?'] unless @linescore && inning
 
-      [@linescore.xpath('//game/@inning').text.to_i,
-       @linescore.xpath('//game/@inning_state').text]
+      [inning.to_i, inning_state]
     end
 
     def runners
@@ -100,15 +102,13 @@ module MLBGameday
     def home_record
       return [0, 0] unless @linescore
 
-      [@linescore.xpath('//game/@home_win'),
-       @linescore.xpath('//game/@home_loss')].map(&:text).map(&:to_i)
+      [home_win, home_loss].map(&:to_i)
     end
 
     def away_record
       return [0, 0] unless @linescore
 
-      [@linescore.xpath('//game/@away_win'),
-       @linescore.xpath('//game/@away_loss')].map(&:text).map(&:to_i)
+      [away_win, away_loss].map(&:to_i)
     end
 
     def current_pitcher
@@ -161,8 +161,7 @@ module MLBGameday
     def score
       return [0, 0] unless in_progress? || over?
 
-      [@linescore.xpath('//game/@home_team_runs').text,
-       @linescore.xpath('//game/@away_team_runs').text].map(&:to_i)
+      [home_team_runs, away_team_runs].map(&:to_i)
     end
 
     def home_pitcher
@@ -171,7 +170,7 @@ module MLBGameday
       case status
       when 'In Progress'
         # The xpath changes based on which half of the inning it is
-        if @linescore.xpath('//game/@top_inning').text == 'Y'
+        if top_inning == 'Y'
           opposing_pitcher
         else
           current_pitcher
@@ -191,7 +190,7 @@ module MLBGameday
       case status
       when 'In Progress'
         # The xpath changes based on which half of the inning it is
-        if @linescore.xpath('//game/@top_inning').text == 'Y'
+        if top_inning == 'Y'
           current_pitcher
         else
           opposing_pitcher
@@ -238,12 +237,18 @@ module MLBGameday
     def date
       return Date.today unless @linescore # SUPER KLUDGE
 
-      @date ||= Chronic.parse @linescore.xpath('//game/@original_date').text
+      @date ||= Chronic.parse original_date
     end
 
     # So we don't get huge printouts
     def inspect
       %(#<MLBGameday::Game @gid="#{@gid}">)
+    end
+
+    def method_missing(method_name, *args, &blk)
+      value = @linescore.xpath("//game/@#{method_name}").text
+      return value unless value.empty?
+      nil
     end
   end
 end
