@@ -13,8 +13,8 @@ module MLBGameday
 
       @files = files
 
-      @home_team = @api.team gid[18, 6]
-      @away_team = @api.team gid[11, 6]
+      @home_team = @api.team files[:linescore].xpath('//game/@home_team_name').text
+      @away_team = @api.team files[:linescore].xpath('//game/@away_team_name').text
     end
 
     def teams
