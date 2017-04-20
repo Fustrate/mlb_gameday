@@ -142,7 +142,11 @@ module MLBGameday
     protected
 
     def fetch_xml(path, interpolations = {})
-      Nokogiri::XML open format("#{API_URL}#{path}.xml", interpolations)
+      full_path = "#{API_URL}#{path}.xml"
+
+      full_path = format(full_path, interpolations) if interpolations.any?
+
+      Nokogiri::XML open full_path
     rescue
       nil
     end
