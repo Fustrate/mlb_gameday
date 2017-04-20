@@ -23,7 +23,7 @@ module MLBGameday
       @names ||= (implicit_names + alt_names).uniq
     end
 
-    def is_called?(name)
+    def called?(name)
       names.include?(name.downcase)
     end
 

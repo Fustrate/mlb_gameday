@@ -246,7 +246,9 @@ module MLBGameday
     def date
       return Date.today unless @files[:linescore] # SUPER KLUDGE
 
-      @date ||= Chronic.parse @files[:linescore].xpath('//game/@original_date').text
+      @date ||= Chronic.parse(
+        @files[:linescore].xpath('//game/@original_date').text
+      )
     end
 
     # So we don't get huge printouts

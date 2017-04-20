@@ -38,7 +38,7 @@ module MLBGameday
     def team(name)
       return name if name.is_a? MLBGameday::Team
 
-      teams.find { |team| team.is_called?(name) }
+      teams.find { |team| team.called?(name) }
     end
 
     def teams
