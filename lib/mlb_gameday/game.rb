@@ -1,26 +1,20 @@
 # frozen_string_literal: true
+
 module MLBGameday
   # This class is just too long. It might be able to be split up, but it's not
   # likely to happen any time soon. For now, we'll disable the cop.
   # rubocop:disable Metrics/ClassLength
   class Game
-    attr_reader :gid, :home_team, :away_team, :linescore, :gamecenter, :boxscore
+    attr_reader :gid, :home_team, :away_team, :files
 
-    def initialize(api, gid, linescore: nil, gamecenter: nil, boxscore: nil)
+    def initialize(api, gid, files = {})
       @api = api
       @gid = gid
 
-      @linescore  = linescore
-      @gamecenter = gamecenter
-      @boxscore   = boxscore
+      @files = files
 
-      if linescore
-        @home_team = @api.team linescore.xpath('//game/@home_name_abbrev').text
-        @away_team = @api.team linescore.xpath('//game/@away_name_abbrev').text
-      else
-        @home_team = @api.team gamecenter.xpath('//game/@id').text[18, 6]
-        @away_team = @api.team gamecenter.xpath('//game/@id').text[11, 6]
-      end
+      @home_team = @api.team gid[18, 6]
+      @away_team = @api.team gid[11, 6]
     end
 
     def teams
@@ -28,54 +22,62 @@ module MLBGameday
     end
 
     def venue
-      return @linescore.xpath('//game/@venue').text if @linescore
+      return @files[:linescore].xpath('//game/@venue').text if @files[:linescore]
 
-      @gamecenter.xpath('//game/venueShort').text
+      files[:gamecenter].xpath('//game/venueShort').text
     end
 
     def home_start_time(ampm: true)
-      [
-        @linescore.xpath('//game/@home_time').text,
-        (@linescore.xpath('//game/@home_ampm').text if ampm),
-        @linescore.xpath('//game/@home_time_zone').text
-      ].compact.join ' '
+      if ampm
+        [
+          @files[:linescore].xpath('//game/@home_time').text,
+          @files[:linescore].xpath('//game/@home_ampm').text,
+          @files[:linescore].xpath('//game/@home_time_zone').text
+        ].join ' '
+      else
+        [
+          @files[:linescore].xpath('//game/@home_time').text,
+          @files[:linescore].xpath('//game/@home_time_zone').text
+        ].join ' '
+      end
     end
 
     def away_start_time(ampm: true)
-      [
-        @linescore.xpath('//game/@away_time').text,
-        (@linescore.xpath('//game/@away_ampm').text if ampm),
-        @linescore.xpath('//game/@away_time_zone').text
-      ].compact.join ' '
+      if ampm
+        [
+          @files[:linescore].xpath('//game/@away_time').text,
+          @files[:linescore].xpath('//game/@away_ampm').text,
+          @files[:linescore].xpath('//game/@away_time_zone').text
+        ].join ' '
+      else
+        [
+          @files[:linescore].xpath('//game/@away_time').text,
+          @files[:linescore].xpath('//game/@away_time_zone').text
+        ].join ' '
+      end
     end
 
     # Preview, Pre-Game, In Progress, Final
     def status
-      @status ||= if @linescore
-                    @linescore.xpath('//game/@status').text
-                  else
-                    {
-                      'S' => 'Preview',
-                      'I' => 'In Progress',
-                      'O' => 'Game Over',
-                      'CS' => 'Cancelled',
-                      'F' => 'Final',
-                      'CE' => 'Completed Early',
-                      'P' => 'Postponed'
-                    }[@gamecenter.xpath('//game/@status').text]
-                  end
+      return 'Preview' unless @files[:linescore]
+
+      @status ||= @files[:linescore].xpath('//game/@status').text
     end
 
     # [3, Top/Middle/Bottom/End]
     def inning
-      return [0, '?'] unless @linescore && @linescore.xpath('//game/@inning')
+      return [0, '?'] unless @files[:linescore]&.xpath('//game/@inning')
 
-      [@linescore.xpath('//game/@inning').text.to_i,
-       @linescore.xpath('//game/@inning_state').text]
+      [
+        @files[:linescore].xpath('//game/@inning').text.to_i,
+        @files[:linescore].xpath('//game/@inning_state').text
+      ]
     end
 
     def runners
-      first, second, third = [nil, nil, nil]
+      first = nil
+      second = nil
+      third = nil
 
       [first, second, third]
     end
@@ -98,71 +100,77 @@ module MLBGameday
     end
 
     def home_record
-      return [0, 0] unless @linescore
+      return [0, 0] unless @files[:linescore]
 
-      [@linescore.xpath('//game/@home_win'),
-       @linescore.xpath('//game/@home_loss')].map(&:text).map(&:to_i)
+      [
+        @files[:linescore].xpath('//game/@home_win'),
+        @files[:linescore].xpath('//game/@home_loss')
+      ].map(&:text).map(&:to_i)
     end
 
     def away_record
-      return [0, 0] unless @linescore
+      return [0, 0] unless @files[:linescore]
 
-      [@linescore.xpath('//game/@away_win'),
-       @linescore.xpath('//game/@away_loss')].map(&:text).map(&:to_i)
+      [
+        @files[:linescore].xpath('//game/@away_win'),
+        @files[:linescore].xpath('//game/@away_loss')
+      ].map(&:text).map(&:to_i)
     end
 
     def current_pitcher
       return nil unless in_progress?
 
-      @api.pitcher @linescore.xpath('//game/current_pitcher/@id').text,
+      @api.pitcher @files[:linescore].xpath('//game/current_pitcher/@id').text,
                    year: date.year
     end
 
     def opposing_pitcher
       return nil unless in_progress?
 
-      @api.pitcher @linescore.xpath('//game/opposing_pitcher/@id').text,
+      @api.pitcher @files[:linescore].xpath('//game/opposing_pitcher/@id').text,
                    year: date.year
     end
 
     def winning_pitcher
       return nil unless over?
 
-      @api.pitcher @linescore.xpath('//game/winning_pitcher/@id').text,
+      @api.pitcher @files[:linescore].xpath('//game/winning_pitcher/@id').text,
                    year: date.year
     end
 
     def losing_pitcher
       return nil unless over?
 
-      @api.pitcher @linescore.xpath('//game/losing_pitcher/@id').text,
+      @api.pitcher @files[:linescore].xpath('//game/losing_pitcher/@id').text,
                    year: date.year
     end
 
     def save_pitcher
       return nil unless over?
 
-      @api.pitcher @linescore.xpath('//game/save_pitcher/@id').text,
+      @api.pitcher @files[:linescore].xpath('//game/save_pitcher/@id').text,
                    year: date.year
     end
 
     def away_starting_pitcher
-      return '' unless @linescore
+      return '' unless @files[:linescore]
 
-      @linescore.xpath('//game/away_probable_pitcher/@id').text
+      @files[:linescore].xpath('//game/away_probable_pitcher/@id').text
     end
 
     def home_starting_pitcher
-      return '' unless @linescore
+      return '' unless @files[:linescore]
 
-      @linescore.xpath('//game/home_probable_pitcher/@id').text
+      @files[:linescore].xpath('//game/home_probable_pitcher/@id').text
     end
 
     def score
       return [0, 0] unless in_progress? || over?
 
-      [@linescore.xpath('//game/@home_team_runs').text,
-       @linescore.xpath('//game/@away_team_runs').text].map(&:to_i)
+      [
+        @files[:linescore].xpath('//game/@home_team_runs').text,
+        @files[:linescore].xpath('//game/@away_team_runs').text
+      ].map(&:to_i)
     end
 
     def home_pitcher
@@ -171,7 +179,7 @@ module MLBGameday
       case status
       when 'In Progress'
         # The xpath changes based on which half of the inning it is
-        if @linescore.xpath('//game/@top_inning').text == 'Y'
+        if @files[:linescore].xpath('//game/@top_inning').text == 'Y'
           opposing_pitcher
         else
           current_pitcher
@@ -191,7 +199,7 @@ module MLBGameday
       case status
       when 'In Progress'
         # The xpath changes based on which half of the inning it is
-        if @linescore.xpath('//game/@top_inning').text == 'Y'
+        if @files[:linescore].xpath('//game/@top_inning').text == 'Y'
           current_pitcher
         else
           opposing_pitcher
@@ -206,39 +214,39 @@ module MLBGameday
     end
 
     def home_tv
-      return nil unless @gamecenter
+      return nil unless files[:gamecenter]
 
-      @gamecenter.xpath('//game/broadcast/home/tv').text
+      files[:gamecenter].xpath('//game/broadcast/home/tv').text
     end
 
     def away_tv
-      return nil unless @gamecenter
+      return nil unless files[:gamecenter]
 
-      @gamecenter.xpath('//game/broadcast/away/tv').text
+      files[:gamecenter].xpath('//game/broadcast/away/tv').text
     end
 
     def home_radio
-      return nil unless @gamecenter
+      return nil unless files[:gamecenter]
 
-      @gamecenter.xpath('//game/broadcast/home/radio').text
+      files[:gamecenter].xpath('//game/broadcast/home/radio').text
     end
 
     def away_radio
-      return nil unless @gamecenter
+      return nil unless files[:gamecenter]
 
-      @gamecenter.xpath('//game/broadcast/away/radio').text
+      files[:gamecenter].xpath('//game/broadcast/away/radio').text
     end
 
     def free?
-      return false unless @linescore
+      return false unless @files[:linescore]
 
-      @linescore.xpath('//game/game_media/media/@free').text == 'ALL'
+      @files[:linescore].xpath('//game/game_media/media/@free').text == 'ALL'
     end
 
     def date
-      return Date.today unless @linescore # SUPER KLUDGE
+      return Date.today unless @files[:linescore] # SUPER KLUDGE
 
-      @date ||= Chronic.parse @linescore.xpath('//game/@original_date').text
+      @date ||= Chronic.parse @files[:linescore].xpath('//game/@original_date').text
     end
 
     # So we don't get huge printouts

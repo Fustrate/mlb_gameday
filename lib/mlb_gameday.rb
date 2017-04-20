@@ -1,11 +1,12 @@
 # frozen_string_literal: true
+
 require 'httparty'
 require 'nokogiri'
 require 'open-uri'
 require 'psych'
 require 'chronic'
 
-%w(version league division team game player pitcher batter).each do |file|
+%w[version league division team game player pitcher batter].each do |file|
   require "mlb_gameday/#{file}"
 end
 
@@ -14,7 +15,7 @@ module MLBGameday
 
   BATTER = '/year_%{year}/batters/%{id}'
   PITCHER = '/year_%{year}/pitchers/%{id}'
-  BOXSCORE = '/year_%{year}/month_%{month}/day_%{day}/gid_%{gid}/boxscore'
+  RAWBOXSCORE = '/year_%{year}/month_%{month}/day_%{day}/gid_%{gid}/rawboxscore'
   GAMECENTER = '/year_%{year}/month_%{month}/day_%{day}/gid_%{gid}/gamecenter'
   LINESCORE = '/year_%{year}/month_%{month}/day_%{day}/gid_%{gid}/linescore'
   SCOREBOARD = '/year_%Y/month_%m/day_%d/miniscoreboard'
@@ -35,11 +36,9 @@ module MLBGameday
     end
 
     def team(name)
-      if name.is_a? MLBGameday::Team
-        name
-      else
-        teams.find { |team| team.is_called?(name) }
-      end
+      return name if name.is_a? MLBGameday::Team
+
+      teams.find { |team| team.is_called?(name) }
     end
 
     def teams
@@ -73,7 +72,7 @@ module MLBGameday
         gid,
         gamecenter: gamecenter_xml(gid),
         linescore: linescore_xml(gid),
-        boxscore: boxscore_xml(gid)
+        rawboxscore: rawboxscore_xml(gid)
       )
     end
 
@@ -106,20 +105,16 @@ module MLBGameday
       fetch_xml LINESCORE, year: year, month: month, day: day, gid: gid
     end
 
-    def boxscore_xml(gid)
+    def rawboxscore_xml(gid)
       year, month, day, = gid.split '_'
 
-      fetch_xml BOXSCORE, year: year, month: month, day: day, gid: gid
-    rescue
-      nil
+      fetch_xml RAWBOXSCORE, year: year, month: month, day: day, gid: gid
     end
 
     def gamecenter_xml(gid)
       year, month, day, = gid.split '_'
 
       fetch_xml GAMECENTER, year: year, month: month, day: day, gid: gid
-    rescue
-      nil
     end
 
     def batter_xml(id, year: nil)
@@ -147,9 +142,9 @@ module MLBGameday
     protected
 
     def fetch_xml(path, interpolations = {})
-      Nokogiri::XML open format(API_URL + path + '.xml', interpolations)
-    rescue OpenURI::HTTPError
-      false
+      Nokogiri::XML open format("#{API_URL}#{path}.xml", interpolations)
+    rescue
+      nil
     end
   end
 end
