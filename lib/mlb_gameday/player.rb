@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module MLBGameday
   class Player
     attr_reader :id, :data
