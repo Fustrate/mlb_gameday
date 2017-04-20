@@ -45,7 +45,7 @@ class TestGame < MiniTest::Test
     assert_equal 1, games.count
   end
 
-  def test_two_teams
+  def test_game_has_two_teams
     assert_equal 2, @game.teams.count
   end
 
@@ -81,5 +81,33 @@ class TestGame < MiniTest::Test
     skip 'Free game not yet loaded.'
 
     assert @free_game.free?
+  end
+
+  def test_game_attendance
+    assert_equal '41,129', @game.attendance
+  end
+
+  def test_game_elapsed_time
+    assert_equal '3:08', @game.elapsed_time
+  end
+
+  def test_game_weather
+    assert_equal '71 degrees, partly cloudy', @game.weather
+  end
+
+  def test_game_wind
+    assert_equal '8 mph, Out to CF', @game.wind
+  end
+
+  def test_game_umpires
+    assert_equal(
+      {
+        'HP' => 'Phil Cuzzi',
+        '1B' => 'Gerry Davis',
+        '2B' => 'Quinn Wolcott',
+        '3B' => 'Greg Gibson'
+      },
+      @game.umpires
+    )
   end
 end

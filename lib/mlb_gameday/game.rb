@@ -253,6 +253,34 @@ module MLBGameday
       )
     end
 
+    def attendance
+      @files[:rawboxscore]&.xpath('//boxscore/@attendance')&.text || '0'
+    end
+
+    def elapsed_time
+      @files[:rawboxscore]&.xpath('//boxscore/@elapsed_time')&.text || ''
+    end
+
+    def weather
+      @files[:rawboxscore]&.xpath('//boxscore/@weather')&.text || ''
+    end
+
+    def wind
+      @files[:rawboxscore]&.xpath('//boxscore/@wind')&.text || ''
+    end
+
+    def umpires
+      return [] unless @files[:rawboxscore]
+
+      umps = {}
+
+      @files[:rawboxscore].xpath('//boxscore/umpires/umpire').each do |umpire|
+        umps[umpire.xpath('@position').text] = umpire.xpath('@name').text
+      end
+
+      umps
+    end
+
     # So we don't get huge printouts
     def inspect
       %(#<MLBGameday::Game @gid="#{@gid}">)
