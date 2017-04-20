@@ -22,7 +22,9 @@ module MLBGameday
     end
 
     def venue
-      return @files[:linescore].xpath('//game/@venue').text if @files[:linescore]
+      if @files[:linescore]
+        return @files[:linescore].xpath('//game/@venue').text
+      end
 
       files[:gamecenter].xpath('//game/venueShort').text
     end
