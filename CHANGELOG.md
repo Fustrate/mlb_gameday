@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.1 / 0.2.2
+
+* Recognize "d-backs" as a name for the Diamondbacks
+
 ## 0.2.0
 
 * Added game attendance, weather, wind, elapsed time, and umpires
