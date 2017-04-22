@@ -289,6 +289,7 @@
           - dbacks
           - dback
           - az
+          - "d-backs"
         :COL: !ruby/object:MLBGameday::Team
           name: Rockies
           city: Colorado
