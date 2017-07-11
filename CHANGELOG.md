@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.3 / 0.2.4
+
+* Add All Star teams
+
 ## 0.2.1 / 0.2.2
 
 * Recognize "d-backs" as a name for the Diamondbacks
