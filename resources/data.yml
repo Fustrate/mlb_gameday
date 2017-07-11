@@ -1,345 +1,345 @@
 ---
-:AL: &al !ruby/object:MLBGameday::League
-  name: American
-  divisions:
-    :East: &aleast !ruby/object:MLBGameday::Division
-      name: East
-      league: *al
-      id: 201
-      teams:
-        :BAL: !ruby/object:MLBGameday::Team
-          name: Orioles
-          city: Baltimore
-          league: *al
-          division: *aleast
-          code: BAL
-          file_code: bal
-          id: 110
-          alt_names: [balmlb]
-        :BOS: !ruby/object:MLBGameday::Team
-          name: Red Sox
-          city: Boston
-          league: *al
-          division: *aleast
-          code: BOS
-          file_code: bos
-          id: 111
-          alt_names: [bosox, bosmlb]
-        :NYY: !ruby/object:MLBGameday::Team
-          name: Yankees
-          city: New York
-          league: *al
-          division: *aleast
-          code: NYY
-          file_code: nyy
-          id: 147
-          alt_names:
-          - new york yankee
-          - nyamlb
-        :TB: !ruby/object:MLBGameday::Team
-          name: Rays
-          city: Tampa Bay
-          league: *al
-          division: *aleast
-          code: TB
-          file_code: tb
-          id: 139
-          alt_names:
-          - devil rays
-          - devil ray
-          - tampa
-          - tbamlb
-        :TOR: !ruby/object:MLBGameday::Team
-          name: Blue Jays
-          city: Toronto
-          league: *al
-          division: *aleast
-          code: TOR
-          file_code: tor
-          id: 141
-          alt_names:
-          - bluejay
-          - jays
-          - jay
-          - tormlb
-    :Central: &alcentral !ruby/object:MLBGameday::Division
-      name: Central
-      league: *al
-      id: 202
-      teams:
-        :CLE: !ruby/object:MLBGameday::Team
-          name: Indians
-          city: Cleveland
-          league: *al
-          division: *alcentral
-          code: CLE
-          file_code: cle
-          id: 114
-        :CWS: !ruby/object:MLBGameday::Team
-          name: White Sox
-          city: Chicago
-          league: *al
-          division: *alcentral
-          code: CWS
-          file_code: cws
-          id: 145
-        :DET: !ruby/object:MLBGameday::Team
-          name: Tigers
-          city: Detroit
-          league: *al
-          division: *alcentral
-          code: DET
-          file_code: det
-          id: 116
-        :KC: !ruby/object:MLBGameday::Team
-          name: Royals
-          city: Kansas City
-          league: *al
-          division: *alcentral
-          code: KC
-          file_code: kc
-          id: 118
-          alt_names:
-          - kansas
-        :MIN: !ruby/object:MLBGameday::Team
-          name: Twins
-          city: Minnesota
-          league: *al
-          division: *alcentral
-          code: MIN
-          file_code: min
-          id: 142
-    :West: &alwest !ruby/object:MLBGameday::Division
-      name: West
-      league: *al
-      id: 200
-      teams:
-        :LAA: !ruby/object:MLBGameday::Team
-          name: Angels
-          city: Anaheim
-          league: *al
-          division: *alwest
-          code: LAA
-          file_code: ana
-          id: 108
-          alt_names:
-          - ana
-          - los angeles angel
-          - los angeles angels
-          - la angels
-          - la angel
-          - laaa
-          - los angeles angels of anaheim
-        :HOU: !ruby/object:MLBGameday::Team
-          name: Astros
-          city: Houston
-          league: *al
-          division: *alwest
-          code: HOU
-          file_code: hou
-          id: 117
-        :OAK: !ruby/object:MLBGameday::Team
-          name: Athletics
-          city: Oakland
-          league: *al
-          division: *alwest
-          code: OAK
-          file_code: oak
-          id: 133
-          alt_names:
-          - as
-        :SEA: !ruby/object:MLBGameday::Team
-          name: Mariners
-          city: Seattle
-          league: *al
-          division: *alwest
-          code: SEA
-          file_code: sea
-          id: 136
-        :TEX: !ruby/object:MLBGameday::Team
-          name: Rangers
-          city: Texas
-          league: *al
-          division: *alwest
-          code: TEX
-          file_code: tex
-          id: 140
-:NL: &nl !ruby/object:MLBGameday::League
-  name: National
-  divisions:
-    :East: &nleast !ruby/object:MLBGameday::Division
-      name: East
-      league: *nl
-      id: 204
-      teams:
-        :ATL: !ruby/object:MLBGameday::Team
-          name: Braves
-          city: Atlanta
-          league: *nl
-          division: *nleast
-          code: ATL
-          file_code: atl
-          id: 144
-        :MIA: !ruby/object:MLBGameday::Team
-          name: Marlins
-          city: Miami
-          league: *nl
-          division: *nleast
-          code: MIA
-          file_code: mia
-          id: 146
-          alt_names:
-          - florida
-        :NYM: !ruby/object:MLBGameday::Team
-          name: Mets
-          city: New York
-          league: *nl
-          division: *nleast
-          code: NYM
-          file_code: nym
-          id: 121
-          alt_names:
-          - new york met
-        :PHI: !ruby/object:MLBGameday::Team
-          name: Phillies
-          city: Philadelphia
-          league: *nl
-          division: *nleast
-          code: PHI
-          file_code: phi
-          id: 143
-          alt_names:
-          - philly
-        :WSH: !ruby/object:MLBGameday::Team
-          name: Nationals
-          city: Washington
-          league: *nl
-          division: *nleast
-          code: WSH
-          file_code: was
-          id: 120
-          alt_names:
-          - natinals
-    :Central: &nlcentral !ruby/object:MLBGameday::Division
-      name: Central
-      league: *nl
-      id: 205
-      teams:
-        :CHC: !ruby/object:MLBGameday::Team
-          name: Cubs
-          city: Chicago
-          league: *nl
-          division: *nlcentral
-          code: CHC
-          file_code: chc
-          id: 112
-          alt_names:
-          - chicago cub
-        :CIN: !ruby/object:MLBGameday::Team
-          name: Reds
-          city: Cincinnati
-          league: *nl
-          division: *nlcentral
-          code: CIN
-          file_code: cin
-          id: 113
-        :MIL: !ruby/object:MLBGameday::Team
-          name: Brewers
-          city: Milwaukee
-          league: *nl
-          division: *nlcentral
-          code: MIL
-          file_code: mil
-          id: 158
-        :PIT: !ruby/object:MLBGameday::Team
-          name: Pirates
-          city: Pittsburgh
-          league: *nl
-          division: *nlcentral
-          code: PIT
-          file_code: pit
-          id: 134
-          alt_names:
-          - buccos
-          - bucco
-        :STL: !ruby/object:MLBGameday::Team
-          name: Cardinals
-          city: St. Louis
-          league: *nl
-          division: *nlcentral
-          code: STL
-          file_code: stl
-          id: 138
-          alt_names:
-          - st louis
-    :West: &nlwest !ruby/object:MLBGameday::Division
-      name: West
-      league: *nl
-      id: 203
-      teams:
-        :ARI: !ruby/object:MLBGameday::Team
-          name: Diamondbacks
-          city: Arizona
-          league: *nl
-          division: *nlwest
-          code: ARI
-          file_code: ari
-          id: 109
-          alt_names:
-          - dbacks
-          - dback
-          - az
-          - "d-backs"
-        :COL: !ruby/object:MLBGameday::Team
-          name: Rockies
-          city: Colorado
-          league: *nl
-          division: *nlwest
-          code: COL
-          file_code: col
-          id: 115
-        :LAD: !ruby/object:MLBGameday::Team
-          name: Dodgers
-          city: Los Angeles
-          league: *nl
-          division: *nlwest
-          code: LAD
-          file_code: la
-          id: 119
-          alt_names:
-          - la
-          - los angeles dodgers
-          - los angeles dodger
-          - la dodger
-          - la dodgers
-        :SD: !ruby/object:MLBGameday::Team
-          name: Padres
-          city: San Diego
-          league: *nl
-          division: *nlwest
-          code: SD
-          file_code: sd
-          id: 135
-        :SF: !ruby/object:MLBGameday::Team
-          name: Giants
-          city: San Francisco
-          league: *nl
-          division: *nlwest
-          code: SF
-          file_code: sf
-          id: 137
-          alt_names:
-          - san fran
-          - gigantes
-:misc:
-  :teams:
-    :AAS: !ruby/object:MLBGameday::Team
-      name: AL All Stars
-      city: AL
-      code: AL
-      file_code: aas
-    :NAS: !ruby/object:MLBGameday::Team
-      name: NL All Stars
-      city: NL
-      code: NL
-      file_code: nas
+:leagues:
+  :AL: &al !ruby/object:MLBGameday::League
+    name: American
+    divisions:
+      :East: &aleast !ruby/object:MLBGameday::Division
+        name: East
+        league: *al
+        id: 201
+        teams:
+          :BAL: !ruby/object:MLBGameday::Team
+            name: Orioles
+            city: Baltimore
+            league: *al
+            division: *aleast
+            code: BAL
+            file_code: bal
+            id: 110
+            alt_names: [balmlb]
+          :BOS: !ruby/object:MLBGameday::Team
+            name: Red Sox
+            city: Boston
+            league: *al
+            division: *aleast
+            code: BOS
+            file_code: bos
+            id: 111
+            alt_names: [bosox, bosmlb]
+          :NYY: !ruby/object:MLBGameday::Team
+            name: Yankees
+            city: New York
+            league: *al
+            division: *aleast
+            code: NYY
+            file_code: nyy
+            id: 147
+            alt_names:
+            - new york yankee
+            - nyamlb
+          :TB: !ruby/object:MLBGameday::Team
+            name: Rays
+            city: Tampa Bay
+            league: *al
+            division: *aleast
+            code: TB
+            file_code: tb
+            id: 139
+            alt_names:
+            - devil rays
+            - devil ray
+            - tampa
+            - tbamlb
+          :TOR: !ruby/object:MLBGameday::Team
+            name: Blue Jays
+            city: Toronto
+            league: *al
+            division: *aleast
+            code: TOR
+            file_code: tor
+            id: 141
+            alt_names:
+            - bluejay
+            - jays
+            - jay
+            - tormlb
+      :Central: &alcentral !ruby/object:MLBGameday::Division
+        name: Central
+        league: *al
+        id: 202
+        teams:
+          :CLE: !ruby/object:MLBGameday::Team
+            name: Indians
+            city: Cleveland
+            league: *al
+            division: *alcentral
+            code: CLE
+            file_code: cle
+            id: 114
+          :CWS: !ruby/object:MLBGameday::Team
+            name: White Sox
+            city: Chicago
+            league: *al
+            division: *alcentral
+            code: CWS
+            file_code: cws
+            id: 145
+          :DET: !ruby/object:MLBGameday::Team
+            name: Tigers
+            city: Detroit
+            league: *al
+            division: *alcentral
+            code: DET
+            file_code: det
+            id: 116
+          :KC: !ruby/object:MLBGameday::Team
+            name: Royals
+            city: Kansas City
+            league: *al
+            division: *alcentral
+            code: KC
+            file_code: kc
+            id: 118
+            alt_names:
+            - kansas
+          :MIN: !ruby/object:MLBGameday::Team
+            name: Twins
+            city: Minnesota
+            league: *al
+            division: *alcentral
+            code: MIN
+            file_code: min
+            id: 142
+      :West: &alwest !ruby/object:MLBGameday::Division
+        name: West
+        league: *al
+        id: 200
+        teams:
+          :LAA: !ruby/object:MLBGameday::Team
+            name: Angels
+            city: Anaheim
+            league: *al
+            division: *alwest
+            code: LAA
+            file_code: ana
+            id: 108
+            alt_names:
+            - ana
+            - los angeles angel
+            - los angeles angels
+            - la angels
+            - la angel
+            - laaa
+            - los angeles angels of anaheim
+          :HOU: !ruby/object:MLBGameday::Team
+            name: Astros
+            city: Houston
+            league: *al
+            division: *alwest
+            code: HOU
+            file_code: hou
+            id: 117
+          :OAK: !ruby/object:MLBGameday::Team
+            name: Athletics
+            city: Oakland
+            league: *al
+            division: *alwest
+            code: OAK
+            file_code: oak
+            id: 133
+            alt_names:
+            - as
+          :SEA: !ruby/object:MLBGameday::Team
+            name: Mariners
+            city: Seattle
+            league: *al
+            division: *alwest
+            code: SEA
+            file_code: sea
+            id: 136
+          :TEX: !ruby/object:MLBGameday::Team
+            name: Rangers
+            city: Texas
+            league: *al
+            division: *alwest
+            code: TEX
+            file_code: tex
+            id: 140
+  :NL: &nl !ruby/object:MLBGameday::League
+    name: National
+    divisions:
+      :East: &nleast !ruby/object:MLBGameday::Division
+        name: East
+        league: *nl
+        id: 204
+        teams:
+          :ATL: !ruby/object:MLBGameday::Team
+            name: Braves
+            city: Atlanta
+            league: *nl
+            division: *nleast
+            code: ATL
+            file_code: atl
+            id: 144
+          :MIA: !ruby/object:MLBGameday::Team
+            name: Marlins
+            city: Miami
+            league: *nl
+            division: *nleast
+            code: MIA
+            file_code: mia
+            id: 146
+            alt_names:
+            - florida
+          :NYM: !ruby/object:MLBGameday::Team
+            name: Mets
+            city: New York
+            league: *nl
+            division: *nleast
+            code: NYM
+            file_code: nym
+            id: 121
+            alt_names:
+            - new york met
+          :PHI: !ruby/object:MLBGameday::Team
+            name: Phillies
+            city: Philadelphia
+            league: *nl
+            division: *nleast
+            code: PHI
+            file_code: phi
+            id: 143
+            alt_names:
+            - philly
+          :WSH: !ruby/object:MLBGameday::Team
+            name: Nationals
+            city: Washington
+            league: *nl
+            division: *nleast
+            code: WSH
+            file_code: was
+            id: 120
+            alt_names:
+            - natinals
+      :Central: &nlcentral !ruby/object:MLBGameday::Division
+        name: Central
+        league: *nl
+        id: 205
+        teams:
+          :CHC: !ruby/object:MLBGameday::Team
+            name: Cubs
+            city: Chicago
+            league: *nl
+            division: *nlcentral
+            code: CHC
+            file_code: chc
+            id: 112
+            alt_names:
+            - chicago cub
+          :CIN: !ruby/object:MLBGameday::Team
+            name: Reds
+            city: Cincinnati
+            league: *nl
+            division: *nlcentral
+            code: CIN
+            file_code: cin
+            id: 113
+          :MIL: !ruby/object:MLBGameday::Team
+            name: Brewers
+            city: Milwaukee
+            league: *nl
+            division: *nlcentral
+            code: MIL
+            file_code: mil
+            id: 158
+          :PIT: !ruby/object:MLBGameday::Team
+            name: Pirates
+            city: Pittsburgh
+            league: *nl
+            division: *nlcentral
+            code: PIT
+            file_code: pit
+            id: 134
+            alt_names:
+            - buccos
+            - bucco
+          :STL: !ruby/object:MLBGameday::Team
+            name: Cardinals
+            city: St. Louis
+            league: *nl
+            division: *nlcentral
+            code: STL
+            file_code: stl
+            id: 138
+            alt_names:
+            - st louis
+      :West: &nlwest !ruby/object:MLBGameday::Division
+        name: West
+        league: *nl
+        id: 203
+        teams:
+          :ARI: !ruby/object:MLBGameday::Team
+            name: Diamondbacks
+            city: Arizona
+            league: *nl
+            division: *nlwest
+            code: ARI
+            file_code: ari
+            id: 109
+            alt_names:
+            - dbacks
+            - dback
+            - az
+            - "d-backs"
+          :COL: !ruby/object:MLBGameday::Team
+            name: Rockies
+            city: Colorado
+            league: *nl
+            division: *nlwest
+            code: COL
+            file_code: col
+            id: 115
+          :LAD: !ruby/object:MLBGameday::Team
+            name: Dodgers
+            city: Los Angeles
+            league: *nl
+            division: *nlwest
+            code: LAD
+            file_code: la
+            id: 119
+            alt_names:
+            - la
+            - los angeles dodgers
+            - los angeles dodger
+            - la dodger
+            - la dodgers
+          :SD: !ruby/object:MLBGameday::Team
+            name: Padres
+            city: San Diego
+            league: *nl
+            division: *nlwest
+            code: SD
+            file_code: sd
+            id: 135
+          :SF: !ruby/object:MLBGameday::Team
+            name: Giants
+            city: San Francisco
+            league: *nl
+            division: *nlwest
+            code: SF
+            file_code: sf
+            id: 137
+            alt_names:
+            - san fran
+            - gigantes
+:miscellaneous_teams:
+  :AAS: !ruby/object:MLBGameday::Team
+    name: AL All Stars
+    city: AL
+    code: AL
+    file_code: aas
+  :NAS: !ruby/object:MLBGameday::Team
+    name: NL All Stars
+    city: NL
+    code: NL
+    file_code: nas

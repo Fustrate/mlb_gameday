@@ -24,9 +24,11 @@ module MLBGameday
     attr_reader :leagues
 
     def initialize
-      @leagues = Psych.load File.open File.join(
+      @data = Psych.load File.open File.join(
         File.dirname(File.expand_path(__FILE__)), '../resources/data.yml'
       )
+
+      @leagues = @data[:leagues]
     end
 
     def league(name)
@@ -43,7 +45,11 @@ module MLBGameday
 
     def teams
       @teams ||= divisions.map(&:teams).map(&:values).flatten +
-                 @leagues[:misc][:teams].values
+                 miscellaneous_teams
+    end
+
+    def miscellaneous_teams
+      @data[:miscellaneous_teams].values
     end
 
     def division(league, name)

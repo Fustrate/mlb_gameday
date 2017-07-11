@@ -104,4 +104,8 @@ class TestApi < MiniTest::Test
       end
     end
   end
+
+  def test_all_star_teams
+    assert_equal 2, @api.teams.select { |t| t.name['All Stars'] }.length
+  end
 end
