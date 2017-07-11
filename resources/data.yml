@@ -331,8 +331,8 @@
           alt_names:
           - san fran
           - gigantes
-:misc: &misc
-  teams:
+:misc:
+  :teams:
     :AAS: !ruby/object:MLBGameday::Team
       name: AL All Stars
       city: AL
