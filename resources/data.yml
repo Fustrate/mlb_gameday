@@ -331,3 +331,15 @@
           alt_names:
           - san fran
           - gigantes
+:misc: &misc
+  teams:
+    :AAS: !ruby/object:MLBGameday::Team
+      name: AL All Stars
+      city: AL
+      code: AL
+      file_code: aas
+    :NAS: !ruby/object:MLBGameday::Team
+      name: NL All Stars
+      city: NL
+      code: NL
+      file_code: nas

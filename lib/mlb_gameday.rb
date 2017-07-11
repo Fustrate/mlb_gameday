@@ -42,7 +42,8 @@ module MLBGameday
     end
 
     def teams
-      @teams ||= divisions.map(&:teams).map(&:values).flatten
+      @teams ||= divisions.map(&:teams).map(&:values).flatten +
+                 @leagues[:misc][:teams].values
     end
 
     def division(league, name)
