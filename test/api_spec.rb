@@ -13,23 +13,23 @@ class TestApi < MiniTest::Test
   end
 
   def test_league_count
-    assert_equal @api.leagues.count, 2
+    assert_equal 2, @api.leagues.count
   end
 
   def test_division_count
-    assert_equal @api.divisions.count, 6
+    assert_equal 6, @api.divisions.count
   end
 
   def test_team_count
-    assert_equal @api.teams.count, 30
+    assert_equal 32, @api.teams.count
   end
 
   def test_initial_search
-    assert_equal @api.team('LAD').city, 'Los Angeles'
+    assert_equal 'Los Angeles', @api.team('LAD').city
   end
 
   def test_name_search
-    assert_equal @api.team('Dodgers').city, 'Los Angeles'
+    assert_equal 'Los Angeles', @api.team('Dodgers').city
   end
 
   def test_name_search_for_nonexistent_returns_nil
@@ -37,12 +37,12 @@ class TestApi < MiniTest::Test
   end
 
   def test_division_team_count
-    assert_equal @api.team('Dodgers').division.teams.count, 5
+    assert_equal 5, @api.team('Dodgers').division.teams.count
   end
 
   def test_astros_in_al_west
-    assert_equal @api.team('Astros').league.name, 'American'
-    assert_equal @api.team('Astros').division.name, 'West'
+    assert_equal 'American', @api.team('Astros').league.name
+    assert_equal 'West', @api.team('Astros').division.name
   end
 
   def test_names_includes_code
