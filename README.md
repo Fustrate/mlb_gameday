@@ -1,4 +1,4 @@
-# MlbGameday
+# MLBGameday
 
 TODO: Write a gem description
 

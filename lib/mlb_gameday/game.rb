@@ -10,7 +10,6 @@ module MLBGameday
     def initialize(api, gid, files = {})
       @api = api
       @gid = gid
-
       @files = files
 
       if files[:linescore]
@@ -291,4 +290,5 @@ module MLBGameday
       %(#<MLBGameday::Game @gid="#{@gid}">)
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end
