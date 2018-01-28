@@ -13,11 +13,9 @@ end
 module MLBGameday
   API_URL = 'http://gd-terr-origin.mlb.com/components/game/mlb'
 
-  BATTER = '/year_%{year}/batters/%{id}'
-  PITCHER = '/year_%{year}/pitchers/%{id}'
-  RAWBOXSCORE = '/year_%{year}/month_%{month}/day_%{day}/gid_%{gid}/rawboxscore'
-  GAMECENTER = '/year_%{year}/month_%{month}/day_%{day}/gid_%{gid}/gamecenter'
-  LINESCORE = '/year_%{year}/month_%{month}/day_%{day}/gid_%{gid}/linescore'
+  BATTER = '/year_%<year>d/batters/%<id>d'
+  PITCHER = '/year_%<year>d/pitchers/%<id>d'
+  GAME_FOLDER = '/year_%<year>d/month_%02<month>d/day_%02<day>d/gid_%<gid>s'
   SCOREBOARD = '/year_%Y/month_%m/day_%d/miniscoreboard'
 
   class API
@@ -107,49 +105,47 @@ module MLBGameday
     end
 
     def linescore_xml(gid)
-      year, month, day, = gid.split '_'
-
-      fetch_xml LINESCORE, year: year, month: month, day: day, gid: gid
+      fetch_xml "#{GAME_FOLDER}/linescore", gid: gid
     end
 
     def rawboxscore_xml(gid)
-      year, month, day, = gid.split '_'
-
-      fetch_xml RAWBOXSCORE, year: year, month: month, day: day, gid: gid
+      fetch_xml "#{GAME_FOLDER}/rawboxscore", gid: gid
     end
 
     def gamecenter_xml(gid)
-      year, month, day, = gid.split '_'
-
-      fetch_xml GAMECENTER, year: year, month: month, day: day, gid: gid
+      fetch_xml "#{GAME_FOLDER}/gamecenter", gid: gid
     end
 
     def batter_xml(id, year: nil)
-      # We only really want one piece of data from this file...
-      year_data = fetch_xml BATTER, id: id, year: (year || Date.today.year)
+      # We only really want one piece of data from this file. This gives us
+      # the GID of their most recent appearance.
+      gid = fetch_xml(BATTER, id: id, year: (year || Date.today.year))
+        .xpath('//batting/@game_id').text.gsub(/[^a-z0-9]/, '_')
 
-      gid = year_data.xpath('//batting/@game_id').text
-      year, month, day, = gid.split '/'
-
-      fetch_xml "/year_#{year}/month_#{month}/day_#{day}/" \
-                "gid_#{gid.gsub(/[^a-z0-9]/, '_')}/batters/#{id}"
+      fetch_xml "#{GAME_FOLDER}/batters/%<batter>s", gid: gid, batter: id
     end
 
     def pitcher_xml(id, year: nil)
-      # We only really want one piece of data from this file...
-      year_data = fetch_xml PITCHER, id: id, year: (year || Date.today.year)
+      # We only really want one piece of data from this file. This gives us
+      # the GID of their most recent appearance.
+      gid = fetch_xml(PITCHER, id: id, year: (year || Date.today.year))
+        .xpath('//pitching/@game_id').text.gsub(/[^a-z0-9]/, '_')
 
-      gid = year_data.xpath('//pitching/@game_id').text
-      year, month, day, = gid.split '/'
-
-      fetch_xml "/year_#{year}/month_#{month}/day_#{day}/" \
-                "gid_#{gid.gsub(/[^a-z0-9]/, '_')}/pitchers/#{id}"
+      fetch_xml "#{GAME_FOLDER}/pitchers/%<pitcher>s", gid: gid, pitcher: id
     end
 
     protected
 
     def fetch_xml(path, interpolations = {})
       full_path = "#{API_URL}#{path}.xml"
+
+      if interpolations[:gid]
+        year, month, day, = interpolations[:gid].split '_'
+
+        interpolations[:year] = year
+        interpolations[:month] = month
+        interpolations[:day] = day
+      end
 
       full_path = format(full_path, interpolations) if interpolations.any?
 
