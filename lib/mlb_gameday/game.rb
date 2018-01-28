@@ -12,13 +12,8 @@ module MLBGameday
       @gid = gid
       @files = files
 
-      if files[:linescore]
-        @home_team = @api.team files[:linescore].xpath('//game/@home_name_abbrev').text
-        @away_team = @api.team files[:linescore].xpath('//game/@away_name_abbrev').text
-      else
-        @home_team = @api.team files[:gamecenter].xpath('//game/@id').text[18, 6]
-        @away_team = @api.team files[:gamecenter].xpath('//game/@id').text[11, 6]
-      end
+      @home_team = @api.team home_team_identifier
+      @away_team = @api.team away_team_identifier
     end
 
     def teams
@@ -288,6 +283,24 @@ module MLBGameday
     # So we don't get huge printouts
     def inspect
       %(#<MLBGameday::Game @gid="#{@gid}">)
+    end
+
+    protected
+
+    def home_team_identifier
+      if files[:linescore]
+        return files[:linescore].xpath('//game/@home_name_abbrev').text
+      end
+
+      files[:gamecenter].xpath('//game/@id').text[18, 6]
+    end
+
+    def away_team_identifier
+      if files[:linescore]
+        return files[:linescore].xpath('//game/@away_name_abbrev').text
+      end
+
+      files[:gamecenter].xpath('//game/@id').text[11, 6]
     end
   end
   # rubocop:enable Metrics/ClassLength
