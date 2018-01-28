@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.0
+
+* Changed data source to gd-terr-origin.mlb.com since gdx.mlb.com redirects there.
+
 ## 0.2.3 / 0.2.4
 
 * Add All Star teams

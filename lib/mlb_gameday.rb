@@ -11,7 +11,7 @@ require 'chronic'
 end
 
 module MLBGameday
-  API_URL = 'http://gd2.mlb.com/components/game/mlb'
+  API_URL = 'http://gd-terr-origin.mlb.com/components/game/mlb'
 
   BATTER = '/year_%{year}/batters/%{id}'
   PITCHER = '/year_%{year}/pitchers/%{id}'
