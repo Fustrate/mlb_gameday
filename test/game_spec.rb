@@ -9,7 +9,7 @@ class MockedApi < MLBGameday::API
 
   def open(url, &block)
     dir = File.dirname __FILE__
-    base = url.gsub 'http://gd-terr-origin.mlb.com/components/game/mlb/', ''
+    base = url.gsub 'http://gdx.mlb.com/components/game/mlb/', ''
     path = File.join dir, base
 
     unless File.exist?(path)

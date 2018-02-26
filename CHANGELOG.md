@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.1
+
+* Changed back to gdx - the redirect is gone.
+
 ## 0.3.0
 
 * Changed data source to gd-terr-origin.mlb.com since gdx.mlb.com redirects there.
