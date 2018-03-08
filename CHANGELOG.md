@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.2
+
+* Don't load an extra XML file at the end of the game to find the W/L/S pitcher's stats.
+
 ## 0.3.1
 
 * Changed back to gdx - the redirect is gone.
