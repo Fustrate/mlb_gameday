@@ -59,16 +59,16 @@ module MLBGameday
                      @leagues[:NL].divisions.values
     end
 
-    def pitcher(id, year: nil)
+    def pitcher(id, year: nil, gid: nil)
       return if id.empty?
 
-      MLBGameday::Pitcher.new id: id, xml: pitcher_xml(id, year: year)
+      MLBGameday::Pitcher.new id: id, xml: pitcher_xml(id, year: year, gid: gid)
     end
 
-    def batter(id, year: nil)
+    def batter(id, year: nil, gid: nil)
       return if id.empty?
 
-      MLBGameday::Batter.new id: id, xml: batter_xml(id, year: year)
+      MLBGameday::Batter.new id: id, xml: batter_xml(id, year: year, gid: gid)
     end
 
     def game(gid)
@@ -116,19 +116,19 @@ module MLBGameday
       fetch_xml "#{GAME_FOLDER}/gamecenter", gid: gid
     end
 
-    def batter_xml(id, year: nil)
+    def batter_xml(id, year: nil, gid: nil)
       # We only really want one piece of data from this file. This gives us
       # the GID of their most recent appearance.
-      gid = fetch_xml(BATTER, id: id, year: (year || Date.today.year))
+      gid ||= fetch_xml(BATTER, id: id, year: (year || Date.today.year))
         .xpath('//batting/@game_id').text.gsub(/[^a-z0-9]/, '_')
 
       fetch_xml "#{GAME_FOLDER}/batters/%<batter>s", gid: gid, batter: id
     end
 
-    def pitcher_xml(id, year: nil)
+    def pitcher_xml(id, year: nil, gid: nil)
       # We only really want one piece of data from this file. This gives us
       # the GID of their most recent appearance.
-      gid = fetch_xml(PITCHER, id: id, year: (year || Date.today.year))
+      gid ||= fetch_xml(PITCHER, id: id, year: (year || Date.today.year))
         .xpath('//pitching/@game_id').text.gsub(/[^a-z0-9]/, '_')
 
       fetch_xml "#{GAME_FOLDER}/pitchers/%<pitcher>s", gid: gid, pitcher: id

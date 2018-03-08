@@ -136,21 +136,24 @@ module MLBGameday
       return nil unless over?
 
       @api.pitcher @files[:linescore].xpath('//game/winning_pitcher/@id').text,
-                   year: date.year
+                   year: date.year,
+                   gid: @gid
     end
 
     def losing_pitcher
       return nil unless over?
 
       @api.pitcher @files[:linescore].xpath('//game/losing_pitcher/@id').text,
-                   year: date.year
+                   year: date.year,
+                   gid: @gid
     end
 
     def save_pitcher
       return nil unless over?
 
       @api.pitcher @files[:linescore].xpath('//game/save_pitcher/@id').text,
-                   year: date.year
+                   year: date.year,
+                   gid: @gid
     end
 
     def away_starting_pitcher
