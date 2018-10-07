@@ -1,3 +1,7 @@
+# The Gameday API has been deprecated by MLB
+
+This gem is no longer under development. Use [the MLB Stats API gem](//github.com/Fustrate/mlb_stats_api) instead.
+
 # MLBGameday
 
 TODO: Write a gem description
